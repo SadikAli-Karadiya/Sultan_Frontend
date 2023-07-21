@@ -1,0 +1,22 @@
+.search-div:hover {
+    transform: scale(1.1);
+}
+
+.loading {
+    letter-spacing: 4px;
+}
+
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: .2s ease-in-out;
+  }
+
+  .dropdown-menu.inactive {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: .2s ease-in-out;
+  }
+  

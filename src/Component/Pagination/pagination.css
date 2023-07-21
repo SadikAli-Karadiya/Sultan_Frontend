@@ -1,0 +1,38 @@
+.pagination {
+  justify-content: center;
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+}
+
+.page-item .page-link {
+  position: relative;
+  display: block;
+  margin: 0 2px;
+  padding: 5px 13px;
+  border-radius: 5px;
+  color: #5d87ff;
+  text-decoration: none;
+}
+
+.page-item.active .page-link {
+  color: #ffffff;
+  background-color: #5d87ff;
+}
+
+.page-item.disabled .page-link {
+  pointer-events: none;
+  cursor: auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
