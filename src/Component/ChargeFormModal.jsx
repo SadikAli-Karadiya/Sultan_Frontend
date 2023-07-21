@@ -14,11 +14,7 @@ import { AxiosError } from "axios";
 import moment from 'moment'
 
 function ChargeFormModal({ showModal, handleShowModal, EMI_Details, is_Edit }) {
-
-  if (!showModal) {
-    return <></>;
-  }
-
+  
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = React.useState();
   const [selectPayment, setSelectPayment] = React.useState("1");
@@ -47,6 +43,7 @@ function ChargeFormModal({ showModal, handleShowModal, EMI_Details, is_Edit }) {
     invalid_pin: '',
     month: ''
   });
+
 
   const onSubmit = () => {
     let err = 0;
@@ -406,7 +403,7 @@ function ChargeFormModal({ showModal, handleShowModal, EMI_Details, is_Edit }) {
                             handleCharge={handleCharge}
                             className="rounded-md py-[6px] px-3 outline-none"
                             placeholder="Enter Charge " />
-                          {errors.charge && touched.charge
+                          {errors.charge
                             ?
                             <p className='form-error text-red-600 text-sm font-semibold'>{errors.charge}</p>
                             :

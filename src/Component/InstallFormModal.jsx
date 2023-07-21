@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Modal } from "../Component/Modal";
@@ -9,10 +9,7 @@ import { AddInstallment, UpdateInstallment } from '../utils/apiCalls';
 
 
 function InstallmentFormModal({ showModal, handleShowModal, refetchInstallments, InstallmentDetails, is_Edit }) {
-  
-  if (!showModal) {
-    return <></>;
-  }
+
 
   let id = InstallmentDetails?.id;
 
@@ -67,7 +64,7 @@ function InstallmentFormModal({ showModal, handleShowModal, refetchInstallments,
   const { values, errors, resetForm, handleBlur, touched, setValues, setFieldValue, handleChange, handleSubmit } =
     useFormik({
       initialValues:
-        JSON.stringify(InstallmentDetails) != {} ? { month : InstallmentDetails?.month , charges : InstallmentDetails?.charges } :
+        JSON.stringify(InstallmentDetails) != {} ? { month: InstallmentDetails?.month, charges: InstallmentDetails?.charges } :
           initialValues,
       validationSchema: installmentSchema,
       async onSubmit(data) {
@@ -89,18 +86,22 @@ function InstallmentFormModal({ showModal, handleShowModal, refetchInstallments,
     handleShowModal(false);
   };
 
-  React.useEffect(() => {
-    if(is_Edit && updateInstallment.data?.data){
+  useEffect(() => {
+    if (is_Edit && updateInstallment.data?.data) {
       toast.success(updateInstallment.data?.data?.message);
       refetchInstallments()
       handleModalClose()
     }
-    else if(addInstallment.data?.data){
+    else if (addInstallment.data?.data) {
       toast.success(addInstallment.data?.data?.message);
       refetchInstallments()
       handleModalClose()
     }
-  },[addInstallment.isSuccess, updateInstallment.isSuccess]);
+  }, [addInstallment.isSuccess, updateInstallment.isSuccess]);
+
+  if (!showModal) {
+    return <></>;
+  }
 
   return (
     <Modal open={showModal}
@@ -185,14 +186,14 @@ function InstallmentFormModal({ showModal, handleShowModal, refetchInstallments,
                     className={`${addInstallment.isLoading || updateInstallment.isLoading ? 'opacity-60' : ''} w-28 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
                   >
                     {
-                      addInstallment.isLoading || updateInstallment.isLoading 
-                      ? 
-                        'Loading...' 
-                      : 
-                        is_Edit
+                      addInstallment.isLoading || updateInstallment.isLoading
                         ?
-                          'Update'
+                        'Loading...'
                         :
+                        is_Edit
+                          ?
+                          'Update'
+                          :
                           'Submit'
                     }
 

@@ -47,9 +47,6 @@ const productSchema = Yup.object({
 });
 
 function ProductFormModal({ showModal, refetchPhones, handleShowModal, ModelDetails, is_Edit }) {
-  if (!showModal) {
-    return <></>;
-  }
 
   let Company = useQuery('company', getAllCompanies)
   const [company, setCompany] = useState(is_Edit == true ? ModelDetails?.company?.company_name : "");
@@ -110,6 +107,10 @@ function ProductFormModal({ showModal, refetchPhones, handleShowModal, ModelDeta
       toast.error(addPhone.error.response.data.message);
     }
   }, [addPhone.isSuccess, addPhone.isError, updatePhone.isSuccess, updatePhone.isError]);
+
+  if (!showModal) {
+    return <></>;
+  }
 
   return (
     <Modal open={showModal}

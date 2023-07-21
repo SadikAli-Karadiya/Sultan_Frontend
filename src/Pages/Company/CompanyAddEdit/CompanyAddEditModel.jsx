@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Modal } from "../../../Component/Modal";
 import * as Yup from "yup";
@@ -8,10 +8,6 @@ import { AddCompany, EditCompany } from '../../../utils/apiCalls';
 
 
 function CompanyFormModal({ showModal, handleShowModal, refetchCompanies, is_Edit, CompanyDetails }) {
-
-  if (!showModal) {
-    return <></>;
-  }
 
   // let id = InstallmentDetails?.id;
 
@@ -69,12 +65,12 @@ function CompanyFormModal({ showModal, handleShowModal, refetchCompanies, is_Edi
           initialValues,
       validationSchema: companySchema,
       async onSubmit(data) {
-        {
-          is_Edit ?
-            Object.assign(data, { id: CompanyDetails.id })
-            :
-            null
-        }
+        // {
+        //   is_Edit == true ?
+        //     Object.assign(data, { id: CompanyDetails.id })
+        //     :
+        //     null
+        // }
         try {
           if (is_Edit == true) {
             updateCompany.mutate(data)
@@ -92,7 +88,7 @@ function CompanyFormModal({ showModal, handleShowModal, refetchCompanies, is_Edi
     handleShowModal(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (is_Edit && updateCompany.data?.data) {
       toast.success(updateCompany.data?.data?.message);
       handleModalClose()
@@ -104,6 +100,10 @@ function CompanyFormModal({ showModal, handleShowModal, refetchCompanies, is_Edi
     refetchCompanies()
   }, [addCompany.isSuccess, updateCompany.isSuccess]);
 
+  if (!showModal) {
+    return <></>;
+  }
+  
   return (
     <Modal open={showModal}
       onClose={handleModalClose}
