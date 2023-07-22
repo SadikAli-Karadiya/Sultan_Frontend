@@ -194,14 +194,19 @@ function InstallmentList() {
         <>
             <div className='xl:px-5 h-full'>
                 <div className='py-5 px-5'>
-                    <div className='flex items-center justify-end pb-5'>
-                        <Tippy content="Add New EMI">
-                            <div
-                                onClick={handleAddInstallment}
-                                className=' bg-white border  text-[#0d0d48] rounded-full xs:h-7 xs:w-7 sm:h-11 sm:w-11 cursor-pointer duration-300 flex justify-center items-center hover:bg-[#0d0d48] hover:text-white'>
-                                <BiFolderPlus className='xs:text-base sm:text-xl' />
-                            </div>
-                        </Tippy>
+                    <div className='flex justify-between items-center mb-5'>
+                        <div>
+                            <h1 className='text-2xl font-bold'>All Installments</h1>
+                        </div>
+                        <div className='flex items-center justify-end'>
+                            <Tippy content="Add New EMI">
+                                <div
+                                    onClick={handleAddInstallment}
+                                    className=' bg-white border  text-[#0d0d48] rounded-full xs:h-7 xs:w-7 sm:h-11 sm:w-11 cursor-pointer duration-300 flex justify-center items-center hover:bg-[#0d0d48] hover:text-white'>
+                                    <BiFolderPlus className='xs:text-base sm:text-xl' />
+                                </div>
+                            </Tippy>
+                        </div>
                     </div>
                     <div className='bg-white flex gap-10 px-5 flex-wrap justify-center items-center py-5 rounded-md'>
                         {installment?.data?.data.AllInstallment?.length > 0 ? (
