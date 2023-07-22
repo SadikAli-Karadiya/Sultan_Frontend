@@ -139,7 +139,7 @@ function InstallmentFormModal({ showModal, handleShowModal, refetchInstallments,
         <Modal.Description>
           <div className="px-4 py-4">
             <form method="POST" action="/installment/addinstallment" className="space-y-6" encType='multipart/form-date' onSubmit={handleSubmit}>
-              <div className="flex xs:flex-col items-center xs:space-y-4">
+              <div className="flex xs:flex-col items-center xs:space-y-4 space-x-4">
                 <div className="flex flex-col space-y-2  w-full ">
                   <label htmlFor="company" className="text-white">Installment Name *</label>
                   <input

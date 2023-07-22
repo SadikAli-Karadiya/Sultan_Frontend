@@ -187,7 +187,6 @@ function InstallmentList() {
             customersByInstallment.mutate(installmentId)
             setSelectemi(installmentId)
         }
-
     }, [installment?.data?.data])
 
     return (
