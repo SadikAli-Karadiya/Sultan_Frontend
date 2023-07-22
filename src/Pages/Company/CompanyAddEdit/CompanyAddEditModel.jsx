@@ -61,7 +61,7 @@ function CompanyFormModal({ showModal, handleShowModal, refetchCompanies, is_Edi
   const { values, errors, resetForm, handleBlur, touched, setValues, setFieldValue, handleChange, handleSubmit } =
     useFormik({
       initialValues:
-        JSON.stringify(CompanyDetails) != {} ? { company_name: CompanyDetails?.company_name } :
+        is_Edit ? { company_name: CompanyDetails?.company_name } :
           initialValues,
       validationSchema: companySchema,
       enableReinitialize: true,

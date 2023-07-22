@@ -11,6 +11,7 @@ import { useQuery } from 'react-query'
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 
 function CompanyList() {
@@ -62,11 +63,28 @@ function CompanyList() {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Delete",
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false
+        
         }).then(async (result) => {
             if (result.isConfirmed) {
-                let response = await DeleteCompany(id);
-                if (response.data?.success == true) {
-                    toast.success(response.data?.message);
+                try{
+                    const response = await DeleteCompany(id);
+                    if (response.data?.success == true) {
+                        companies.refetch();
+                        toast.success(response.data?.message);
+                    }
+                }
+                catch(err){
+                    if(err instanceof AxiosError){
+                        toast.error(err.response.data.message)
+                    }
+                    else{
+                        toast.error('Failed to delete company')
+                    }
+                }
+                finally {
+                    Swal.hideLoading(); 
                 }
             }
         });
