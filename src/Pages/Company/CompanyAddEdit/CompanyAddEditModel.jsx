@@ -64,13 +64,14 @@ function CompanyFormModal({ showModal, handleShowModal, refetchCompanies, is_Edi
         JSON.stringify(CompanyDetails) != {} ? { company_name: CompanyDetails?.company_name } :
           initialValues,
       validationSchema: companySchema,
+      enableReinitialize: true,
       async onSubmit(data) {
-        // {
-        //   is_Edit == true ?
-        //     Object.assign(data, { id: CompanyDetails.id })
-        //     :
-        //     null
-        // }
+        {
+          is_Edit == true ?
+            Object.assign(data, { id: CompanyDetails.id })
+            :
+            null
+        }
         try {
           if (is_Edit == true) {
             updateCompany.mutate(data)

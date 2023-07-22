@@ -72,7 +72,7 @@ function ProductList() {
     <>
       <div className=" xl:px-10 h-full">
         <div className='w-full justify-between items-center flex py-8 px-5'>
-          <h1 className='xs:text-xl xl:text-2xl text-[#0d0d48] font-bold'>{location?.state?.company_name}</h1>
+          <h1 className='xs:text-xl xl:text-2xl text-[#0d0d48] font-bold uppercase'>{location?.state?.company_name}</h1>
           <div className='flex items-center justify-end pb-5'>
             <div className="group h-9 w-20 flex justify-center items-center gap-1 cursor-pointer mr-4" id="" onClick={() => navigate(-1)}>
               <IoIosArrowBack className="text-2xl font-bold group-hover:text-blue-700 text-[#0d0d48] mt-[3px]" />
