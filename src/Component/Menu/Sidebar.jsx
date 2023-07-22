@@ -26,7 +26,7 @@ const Sidebar = () => {
     (
       <div className="relative bg-[#f5f7ff] min-h-screen flex w-full">
         <div className="h-full bg-white sticky left-0 top-0">
-          <div className="sidebar h-screen xs:w-20 w-20 xl:w-52 bg-white drop-shadow-md">
+          <div className="sidebar h-screen xs:w-20 w-20 xl:w-56 bg-white drop-shadow-md">
             <div className="sidebar-top flex justify-center pt-3 px-2">
               {/* <img
                 src="/images/logo.png"
@@ -34,15 +34,15 @@ const Sidebar = () => {
                 className="w-2/3 cursor-pointer hidden xl:block"
                 id="logo"
               /> */}
-               <h2 className="text-base xl:text-xl text-[#2908C7] font-bold">SULTAN MOBILE</h2>
+              <h2 className="text-base xl:text-xl text-[#2908C7] font-bold">SULTAN MOBILE</h2>
             </div>
-            <div className="mt-9">
+            <div className="mt-9 px-5">
               <ul className="text-center">
                 <li className="xs:px-5 my-3 xl:my-0">
                   <NavLink
                     activeclassname="active"
                     to="/">
-                    <div className="flex justify-center items-center xl:justify-start py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
+                    <div className="flex justify-center pl-3 items-center xl:justify-start py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
                       <RiDashboardFill className="text-lg" />
                       <h1 className="text-sm hidden xl:block">Dashboard</h1>
                     </div>
@@ -52,7 +52,7 @@ const Sidebar = () => {
                   <NavLink
                     activeclassname="active"
                     to="/InstallmentList">
-                    <div className="flex justify-center items-center xl:justify-start py-2 xs:px-3  rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white">
+                    <div className="flex justify-center pl-3 items-center xl:justify-start py-2 xs:px-3  rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white">
                       <FaWallet className="text-lg" />
                       <h1 className="text-sm hidden xl:block">Installments</h1>
                     </div>
@@ -62,7 +62,7 @@ const Sidebar = () => {
                   <NavLink
                     activeclassname="active"
                     to="/Product">
-                    <div className="flex justify-center items-center xl:justify-start  py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
+                    <div className="flex justify-center pl-3 items-center xl:justify-start  py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
                       <FaMobileAlt className="text-lg" />
                       <h1 className="text-sm hidden xl:block">Phones</h1>
                     </div>
@@ -72,7 +72,7 @@ const Sidebar = () => {
                   <NavLink
                     activeclassname="active"
                     to="/Company">
-                    <div className="flex justify-center items-center xl:justify-start  py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
+                    <div className="flex justify-center pl-3 items-center xl:justify-start  py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
                       <FaThList className="text-lg" />
                       <h1 className="text-sm hidden xl:block">Companies</h1>
                     </div>
@@ -82,7 +82,7 @@ const Sidebar = () => {
                   <NavLink
                     activeclassname="active"
                     to="/EMI">
-                    <div className="flex justify-center items-center xl:justify-start  py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
+                    <div className="flex justify-center pl-3 items-center xl:justify-start  py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
                       <FaRupeeSign className="text-lg" />
                       <h1 className="text-sm hidden xl:block">Pay EMI</h1>
                     </div>
@@ -91,18 +91,8 @@ const Sidebar = () => {
                 <li className="xs:px-5 my-3">
                   <NavLink
                     activeclassname="active"
-                    to="/Customer/add-edit">
-                    <div className="flex justify-center items-center xl:justify-start  py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
-                      <FaUserPlus className="text-lg" />
-                      <h1 className="text-sm hidden xl:block">New Customer</h1>
-                    </div>
-                  </NavLink>
-                </li>
-                <li className="xs:px-5 my-3">
-                  <NavLink
-                    activeclassname="active"
                     to="/Receipt/Search">
-                    <div className="flex justify-center items-center xl:justify-start  py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
+                    <div className="flex justify-center pl-3 items-center xl:justify-start  py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
                       <FaReceipt className="text-lg" />
                       <h1 className="text-sm hidden xl:block">Search Receipt</h1>
                     </div>
@@ -111,8 +101,18 @@ const Sidebar = () => {
                 <li className="xs:px-5 my-3">
                   <NavLink
                     activeclassname="active"
+                    to="/Customer/add-edit">
+                    <div className="flex justify-center pl-3 items-center xl:justify-start  py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
+                      <FaUserPlus className="text-lg" />
+                      <h1 className="text-sm hidden xl:block">New Customer</h1>
+                    </div>
+                  </NavLink>
+                </li>
+                <li className="xs:px-5 my-3">
+                  <NavLink
+                    activeclassname="active"
                     to="/Search">
-                    <div className="flex justify-center items-center xl:justify-start py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
+                    <div className="flex justify-center pl-3 items-center xl:justify-start py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
                       <FaSearch className="text-lg" />
                       <h1 className="text-sm hidden xl:block">Search Customer</h1>
                     </div>
@@ -122,7 +122,7 @@ const Sidebar = () => {
                   <NavLink
                     activeclassname="active"
                     to="/Report">
-                    <div className="flex justify-center items-center xl:justify-start py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
+                    <div className="flex justify-center pl-3 items-center xl:justify-start py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
                       <FaWpforms className="text-lg" />
                       <h1 className="text-sm hidden xl:block">Report</h1>
                     </div>

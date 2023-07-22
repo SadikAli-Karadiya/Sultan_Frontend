@@ -177,12 +177,6 @@ function InstallmentList() {
         setIsEdit(false)
     }
 
-    const handlePayEMI = (id) => {
-        setChargeFormModal(true);
-        setIsEdit(true)
-        setEMIDetails(id);
-    };
-
     React.useEffect(() => {
         setSelectedEmiCustomer(customersByInstallment.data?.data.allCustomers)
     }, [customersByInstallment.isSuccess, customersByInstallment.data])

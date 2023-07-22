@@ -225,6 +225,11 @@ function CustomerProfile() {
     const [toggle, setToggle] = useState(false);
     const [isEnable, setIsEnable] = useState(true);
     const [newPhoneFormModal, setnewPhoneFormModal] = useState(false);
+    const [Photo, setPhoto] = useState("");
+    const [adharfront, setadharfront] = useState("");
+    const [adharback, setadharback] = useState("");
+    const [pan, setpan] = useState("");
+    const [bill, setbill] = useState("");
     const [PhoneDetails, setPhoneDetails] = useState();
 
     const [SingleCustomerDetails, setSingleCustomerDetails] = useState({
@@ -415,7 +420,7 @@ function CustomerProfile() {
                     <div className="bg-white shadow-2xl rounded-md">
                         <form className="flex justify-center items-center pt-5 xl:pt-0 xs:px-5 xl:px-14" onSubmit={handleSubmit} encType="multipart/form-data">
                             <div className="w-full rounded-lg truncate py-9 xl:py-5 ">
-                                <div className="w-full flex xs:flex-col xs:gap-4 xs:px-5 md:px-7 xl:px-14 ">
+                                <div className="w-full flex flex-col xs:gap-4 xs:px-5 md:px-7 xl:px-14 ">
                                     <div className="flex flex-col justify-center items-center w-full xl:gap-1">
                                         <div className="flex flex-col justify-center items-center ">
                                             <div className="profile_img_div flex justify-center rounded-full items-center border-2 border-gray-500 shadow-lg">
@@ -429,7 +434,7 @@ function CustomerProfile() {
                                                                 values.photo
                                                                 :
                                                                 ""
-                                                                // URL.createObjectURL(values.photo)
+                                                            // URL.createObjectURL(values.photo)
                                                             :
                                                             values.photo
                                                     }
@@ -602,7 +607,7 @@ function CustomerProfile() {
                                                                             values.adhar_front
                                                                             :
                                                                             ""
-                                                                            // URL.createObjectURL(values.adhar_front)
+                                                                        // URL.createObjectURL(values.adhar_front)
                                                                         :
                                                                         values.adhar_front
                                                                 }
@@ -653,7 +658,7 @@ function CustomerProfile() {
                                                                             values.adhar_back
                                                                             :
                                                                             ""
-                                                                            // URL.createObjectURL(values.adhar_back)
+                                                                        // URL.createObjectURL(values.adhar_back)
                                                                         :
                                                                         values.adhar_back
                                                                 }
@@ -704,7 +709,7 @@ function CustomerProfile() {
                                                                             values.pancard
                                                                             :
                                                                             ""
-                                                                            // URL.createObjectURL(values.pancard)
+                                                                        // URL.createObjectURL(values.pancard)
                                                                         :
                                                                         values.pancard
                                                                 }
@@ -756,7 +761,7 @@ function CustomerProfile() {
                                                                             values.light_bill
                                                                             :
                                                                             ""
-                                                                            // URL.createObjectURL(values.light_bill)
+                                                                        // URL.createObjectURL(values.light_bill)
                                                                         :
                                                                         values.light_bill
                                                                 }
@@ -925,18 +930,18 @@ function CustomerProfile() {
                                                                         </Tippy>
                                                                     </td>
                                                                 </tr>
-                                                        )
-                                                    })
-                                                : 
-                                                    <tr>
-                                                        <td colSpan="8">
-                                                            <div className='flex justify-center items-center w-full py-5 space-x-4 text-gray-500'>
-                                                                <BsPhone className='text-3xl' />
-                                                                <h1 className='font-semibold'>No phone purchased yet</h1>
-                                                            </div>                                            
-                                                        </td>
-                                                    </tr>
-                                            }
+                                                            )
+                                                        })
+                                                        :
+                                                        <tr>
+                                                            <td colSpan="8">
+                                                                <div className='flex justify-center items-center w-full py-5 space-x-4 text-gray-500'>
+                                                                    <BsPhone className='text-3xl' />
+                                                                    <h1 className='font-semibold'>No phone purchased yet</h1>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                }
                                             </tbody>
                                     }
                                 </table>

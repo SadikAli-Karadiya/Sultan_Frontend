@@ -143,7 +143,7 @@ function CompanyList() {
                                                     index % headingBGColor.length
                                                     ],
                                             }}
-                                            className='w-full mr-2 px-3 py-0.5 rounded-md flex items-center space-x-2 text-sm'>
+                                            className='w-full mr-2 px-3 py-1 rounded-md flex items-center space-x-2 text-sm'>
                                             <h1
                                                 style={{
                                                     color:

@@ -11,12 +11,9 @@ import { PhoneContext } from "../PhoneContext";
 
 function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }) {
 
-  if (!showModal) {
-    return <></>;
-  }
 
-  const {user} = React.useContext(PhoneContext)
-  
+  const { user } = React.useContext(PhoneContext)
+
   const params = useParams();
   let customer_id = params?.id
   const DATE = new Date();
@@ -54,7 +51,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
           ram: "",
           storage: "",
           model: PhoneDetails?.phone?.model_name,
-          iemi : "",
+          iemi: "",
           price: "",
           installment: "",
           dp: "",
@@ -174,6 +171,10 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
     resetForm({ values: "" })
     handleShowModal(false);
   };
+
+  if (!showModal) {
+    return <></>;
+  }
 
   return (
     <Modal open={showModal}
@@ -423,7 +424,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                       <input
                         type="text"
                         name="dp"
-                        onChange={e => {setDownPayment(e.target.value); setFieldValue('dp', e.target.value)}}
+                        onChange={e => { setDownPayment(e.target.value); setFieldValue('dp', e.target.value) }}
                         onBlur={handleBlur}
                         value={Down_Payment}
                         placeholder="Enter Down Payment"

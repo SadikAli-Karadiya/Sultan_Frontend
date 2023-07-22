@@ -17,9 +17,6 @@ const productSchema = Yup.object({
 
 function SpecificationFormModal({ showModal, handleShowModal, refetchSpecification, SpecificationDetails, is_Edit, setIsEdit }) {
 
-  if (!showModal) {
-    return <></>;
-  }
 
   let PhoneId = useParams();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -57,10 +54,10 @@ function SpecificationFormModal({ showModal, handleShowModal, refetchSpecificati
             handleModalClose(false);
           }
         } catch (err) {
-          if(err instanceof AxiosError){
+          if (err instanceof AxiosError) {
             toast.error(err.response.data.message);
           }
-          else{
+          else {
             toast.error(err.message);
           }
         }
@@ -107,6 +104,10 @@ function SpecificationFormModal({ showModal, handleShowModal, refetchSpecificati
     setIsEdit(false)
     handleShowModal(false);
   };
+
+  if (!showModal) {
+    return <></>;
+  }
 
   return (
     <Modal open={showModal}
@@ -227,8 +228,8 @@ function SpecificationFormModal({ showModal, handleShowModal, refetchSpecificati
                   className={`${isSubmitting ? 'opacity-60' : ''} w-28 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
                 >
                   {isSubmitting ? 'Loading...' : is_Edit ? 'Update' : 'Submit'}
-                </button> 
-                
+                </button>
+
               </div>
             </form>
           </div>

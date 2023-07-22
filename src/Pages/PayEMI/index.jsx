@@ -66,7 +66,7 @@ function PayEMI() {
     <>
       <div className=' sm:px-5 xl:px-10 pt-5 h-full'>
         <div className=' py-5 px-5'>
-          <h1 className='text-2xl font-bold'>Pay EMI</h1>
+          <h1 className='text-[#0d0d48] text-2xl font-bold'>Pay EMI</h1>
           <div className='flex justify-center items-center mt-10 '>
             <input
               type="search"
