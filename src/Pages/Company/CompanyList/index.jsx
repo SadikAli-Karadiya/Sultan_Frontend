@@ -132,7 +132,7 @@ function CompanyList() {
                                                         index % headingColor.length
                                                         ],
                                                 }}
-                                                className='uppercase font-semibold font-roboto text-2xl'>{item.company_name}</h1>
+                                                className='uppercase font-bold font-roboto text-2xl'>{item.company_name}</h1>
                                         </div>
                                     </div>
                                     <div className='flex items-center justify-between'>

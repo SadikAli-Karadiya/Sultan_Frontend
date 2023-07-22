@@ -64,9 +64,10 @@ function InstallmentFormModal({ showModal, handleShowModal, refetchInstallments,
   const { values, errors, resetForm, handleBlur, touched, setValues, setFieldValue, handleChange, handleSubmit } =
     useFormik({
       initialValues:
-        JSON.stringify(InstallmentDetails) != {} ? { month: InstallmentDetails?.month, charges: InstallmentDetails?.charges } :
+        is_Edit ? { month: InstallmentDetails?.month, charges: InstallmentDetails?.charges } :
           initialValues,
       validationSchema: installmentSchema,
+      enableReinitialize: true,
       async onSubmit(data) {
         Object.assign(data, { id: id })
         try {
