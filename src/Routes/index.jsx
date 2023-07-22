@@ -13,7 +13,7 @@ function AppRoutes() {
         <BrowserRouter>
             <ErrorBoundry>
                 <Routes>
-                    {true ? (
+                    {token ? (
                         <>
                             <Route path='/*' element={<PrivateRoutes />} />
                         </>
