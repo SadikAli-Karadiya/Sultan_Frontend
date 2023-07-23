@@ -19,10 +19,7 @@ function GenerateReceipt() {
     const {user} = React.useContext(PhoneContext);
 
     const Emi_Details = useQuery(['emi', location?.state?.emi_id], () => getSingleEmi(location?.state.emi_id))
-    const [error, setError] = useState("");
-    const [isLoading, setIsLoading] = useState();
     const [selectPayment, setSelectPayment] = useState("1");
-    const [status, setstatus] = useState("compalete");
     const [Charge, setCharge] = useState(false);
     const [Charge_amount, setchargeamount] = useState("");
     const [chequeNo, setChequeNo] = useState('');
@@ -32,10 +29,9 @@ function GenerateReceipt() {
     const [toggleCheque, setToggleCheque] = useState(false);
     const [toggleUpi, setToggleUpi] = useState(false);
     const [toggleCash, setToggleCash] = useState(true);
-    const [toggle, setToggle] = useState(false);
     const [model, setModel] = useState();
     const navigate = useNavigate();
-    let todayDate = moment(Emi_Details?.data?.data?.SingleEmi?.due_date).format("DD / MM / YYYY")
+    let todayDate = moment(Emi_Details?.data?.data?.SingleEmi?.due_date).format("yyyy-MM-D")
     const [receiptDate, setReceiptDate] = useState(todayDate);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errors, setErrors] = useState({
@@ -426,7 +422,7 @@ function GenerateReceipt() {
                                         <input type="date"
                                             name="receiptDate"
                                             onChange={handleChangeDate}
-                                            value={moment(receiptDate).format("DD-MM-YYYY")}
+                                            value={moment(receiptDate).format("yyyy-MM-D")}
                                             className="ml-4"
                                         />
                                     </div>
