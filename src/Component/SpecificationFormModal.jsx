@@ -13,6 +13,7 @@ const productSchema = Yup.object({
   ram: Yup.string().required("Please Select RAM"),
   storage: Yup.string().required("Please Select Storage"),
   price: Yup.string().required("Please Enter Price").matches(/^[0-9]+$/, 'Please enter only numbers'),
+  colour: Yup.string().required("Please Enter Colour").matches(/^[a-zA-z]+$/, 'Please enter only letters'),
 });
 
 function SpecificationFormModal({ showModal, handleShowModal, refetchSpecification, SpecificationDetails, is_Edit, setIsEdit }) {
@@ -25,12 +26,14 @@ function SpecificationFormModal({ showModal, handleShowModal, refetchSpecificati
     ram: "",
     storage: "",
     price: "",
+    colour: "",
   }
 
   const { values, errors, resetForm, handleBlur, touched, setFieldValue, handleChange, handleSubmit } =
     useFormik({
-      initialValues: JSON.stringify(SpecificationDetails) != {} ? { ram: SpecificationDetails?.ram, storage: SpecificationDetails?.storage, price: SpecificationDetails?.price } : initialValues,
+      initialValues: JSON.stringify(SpecificationDetails) != {} ? { ram: SpecificationDetails?.ram, storage: SpecificationDetails?.storage, price: SpecificationDetails?.price, colour: SpecificationDetails?.colour } : initialValues,
       validationSchema: productSchema,
+      enableReinitialize: true,
       async onSubmit(data) {
         Object.assign(data, { phone_id: PhoneId.id })
         let UpdateData = Object.assign(data, { id: SpecificationDetails?.id })
@@ -216,6 +219,23 @@ function SpecificationFormModal({ showModal, handleShowModal, refetchSpecificati
                   {errors.price && touched.price
                     ?
                     <p className='form-error text-red-600 text-sm font-semibold'>{errors.price}</p>
+                    :
+                    null}
+                </div>
+                <div className="flex flex-col space-y-2 w-full ">
+                  <span className="block text-sm font-medium text-white">
+                    Colour *
+                  </span>
+                  <input type="text"
+                    name="colour"
+                    value={values.colour}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className="rounded-md py-2 px-3 outline-non border border-slate-300 focus:outline-blue-500"
+                    placeholder="Enter Phone Colour" />
+                  {errors.colour && touched.colour
+                    ?
+                    <p className='form-error text-red-600 text-sm font-semibold'>{errors.colour}</p>
                     :
                     null}
                 </div>

@@ -11,6 +11,7 @@ import { useQuery } from 'react-query'
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 
 function CompanyList() {
@@ -19,8 +20,6 @@ function CompanyList() {
     const [is_Edit, setIsEdit] = useState(false);
     const [CompanyDetails, setCompanyDetails] = useState();
     const [CompanyModal, setCompanyModal] = useState(false);
-    const [isHoverEdit, setIsHoverEdit] = useState(false);
-    const [isHoverDelete, setIsHoverDelete] = useState(false);
     const companies = useQuery('companies', getAllCompanies)
 
     const headingColor = [
@@ -40,22 +39,6 @@ function CompanyList() {
         "#ff660030",
         "#ffc91634",
     ];
-
-    const handleMouseEnterEdit = () => {
-        setIsHoverEdit(true);
-    };
-
-    const handleMouseLeaveEdit = () => {
-        setIsHoverEdit(false);
-    };
-
-    const handleMouseEnterDelete = () => {
-        setIsHoverDelete(true);
-    };
-
-    const handleMouseLeaveDelete = () => {
-        setIsHoverDelete(false);
-    };
 
     function handleEditCompany(id) {
         let Companydetails = companies?.data?.data?.all_companies?.find((n) => {
@@ -80,11 +63,28 @@ function CompanyList() {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Delete",
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false
+        
         }).then(async (result) => {
             if (result.isConfirmed) {
-                let response = await DeleteCompany(id);
-                if (response.data?.success == true) {
-                    toast.success(response.data?.message);
+                try{
+                    const response = await DeleteCompany(id);
+                    if (response.data?.success == true) {
+                        companies.refetch();
+                        toast.success(response.data?.message);
+                    }
+                }
+                catch(err){
+                    if(err instanceof AxiosError){
+                        toast.error(err.response.data.message)
+                    }
+                    else{
+                        toast.error('Failed to delete company')
+                    }
+                }
+                finally {
+                    Swal.hideLoading(); 
                 }
             }
         });
@@ -132,7 +132,7 @@ function CompanyList() {
                                                         index % headingColor.length
                                                         ],
                                                 }}
-                                                className='uppercase font-semibold font-roboto text-2xl'>{item.company_name}</h1>
+                                                className='uppercase font-bold font-roboto text-2xl'>{item.company_name}</h1>
                                         </div>
                                     </div>
                                     <div className='flex items-center justify-between'>
@@ -174,9 +174,12 @@ function CompanyList() {
                                                                 index % headingColor.length
                                                                 ]
                                                         }}
-                                                        onMouseEnter={handleMouseEnterEdit}
-                                                        onMouseLeave={handleMouseLeaveEdit}
-                                                        onClick={() => handleEditCompany(item.id)}
+                                                        onClick={(e) => 
+                                                            {
+                                                                e.stopPropagation();
+                                                                handleEditCompany(item.id)
+                                                            }
+                                                        }
                                                         className='rounded-md px-[3px] py-[3px] cursor-pointer '>
                                                         <MdModeEdit className='' />
                                                     </div>
@@ -191,9 +194,10 @@ function CompanyList() {
                                                                 index % headingColor.length
                                                                 ]
                                                         }}
-                                                        onMouseEnter={handleMouseEnterDelete}
-                                                        onMouseLeave={handleMouseLeaveDelete}
-                                                        onClick={() => handleDeleteCompany(item.id)}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleDeleteCompany(item.id)
+                                                        }}
                                                         className='rounded-md px-[3px] py-[3px] cursor-pointer '>
                                                         <MdDelete className='' />
                                                     </div>
@@ -212,111 +216,6 @@ function CompanyList() {
                             </div>
                         </div>
                     )}
-                    {/* <div className='bg-white drop-shadow-md px-5 py-5 rounded-lg w-60 h-40 group'>
-                        <div className='bg-[#16a34a] px-3 py-1 rounded-md flex items-center space-x-2'>
-                            <h1 className='font-semibold text-white'>Total Model : </h1>
-                            <span className='font-semibold text-white'>15</span>
-                        </div>
-                        <div className='flex items-center justify-between mt-14'>
-                            <div className=' py-2 rounded-md '>
-                                <h1 className='uppercase font-semibold text-green-600 font-roboto text-2xl'>oppo</h1>
-                            </div>
-                            <div className='hidden group-hover:block'>
-                                <div className='flex items-center space-x-1 mt-2'>
-                                    <div className='hover:bg-green-600 hover:text-white text-green-600 border-2 border-green-600 bg-white rounded-md px-1 py-1 cursor-pointer '>
-                                        <MdModeEdit className='' />
-                                    </div>
-                                    <div className='hover:bg-green-600 hover:text-white text-green-600 border-2 border-green-600 bg-white rounded-md px-1 py-1 cursor-pointer '>
-                                        <MdDelete className='' />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='bg-white drop-shadow-md px-5 py-5 rounded-lg w-60 h-40 group'>
-                        <div className='bg-black px-3 py-1 rounded-md flex items-center space-x-2'>
-                            <h1 className='font-semibold text-white'>Total Model : </h1>
-                            <span className='font-semibold text-white'>15</span>
-                        </div>
-                        <div className='flex items-center justify-between mt-14 '>
-                            <div className='py-2 rounded-md '>
-                                <h1 className='uppercase font-semibold text-black font-roboto text-2xl'>Samsung</h1>
-                            </div>
-                            <div className='hidden group-hover:block'>
-                                <div className='flex items-center space-x-1 mt-2'>
-                                    <div className='hover:bg-black hover:text-white bg-white text-black border-2 border-black rounded-md px-1 py-1 cursor-pointer '>
-                                        <MdModeEdit className='' />
-                                    </div>
-                                    <div className='hover:bg-black hover:text-white bg-white text-black border-2 border-black rounded-md px-1 py-1 cursor-pointer '>
-                                        <MdDelete className='' />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='bg-white drop-shadow-md px-5 py-5 rounded-lg w-60 h-40 group'>
-                        <div className='bg-[#eb0029] px-3 py-1 rounded-md flex items-center space-x-2'>
-                            <h1 className='font-semibold text-white'>Total Model : </h1>
-                            <span className='font-semibold text-white'>15</span>
-                        </div>
-                        <div className='flex items-center justify-between mt-14 '>
-                            <div className='py-2 rounded-md '>
-                                <h1 className='uppercase font-semibold text-[#eb0029] font-roboto text-2xl'>onepluse</h1>
-                            </div>
-                            <div className='hidden group-hover:block'>
-                                <div className='flex items-center space-x-1 '>
-                                    <div className='hover:bg-[#eb0029] hover:text-white bg-white border-2 border-[#eb0029] text-[#eb0029] rounded-md px-1 py-1 cursor-pointer '>
-                                        <MdModeEdit className='' />
-                                    </div>
-                                    <div className='hover:bg-[#eb0029] hover:text-white bg-white border-2 border-[#eb0029] text-[#eb0029] rounded-md px-1 py-1 cursor-pointer '>
-                                        <MdDelete className='' />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='bg-white drop-shadow-md px-5 py-5 rounded-lg w-60 h-40 group'>
-                        <div className='bg-[#FF6600] px-3 py-1 rounded-md flex items-center space-x-2'>
-                            <h1 className='font-semibold text-white'>Total Model : </h1>
-                            <span className='font-semibold text-white'>15</span>
-                        </div>
-                        <div className='flex items-center justify-between mt-12 '>
-                            <div className='py-2 rounded-md '>
-                                <h1 className='uppercase font-semibold text-orange-600 font-roboto text-2xl'>MI</h1>
-                            </div>
-                            <div className='hidden group-hover:block'>
-                                <div className='flex items-center space-x-1 mt-2'>
-                                    <div className='hover:bg-orange-600 hover:text-white text-orange-600 border-2 border-orange-600 bg-white rounded-md px-1 py-1 cursor-pointer '>
-                                        <MdModeEdit className='' />
-                                    </div>
-                                    <div className='hover:bg-orange-600 hover:text-white text-orange-600 border-2 border-orange-600 bg-white rounded-md px-1 py-1 cursor-pointer '>
-                                        <MdDelete className='' />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='bg-white drop-shadow-md px-5 py-5 rounded-lg w-60 h-40 group'>
-                        <div className='bg-[#ffc916] px-3 py-1 rounded-md flex items-center space-x-2'>
-                            <h1 className='font-semibold text-black'>Total Model : </h1>
-                            <span className='font-semibold text-black'>15</span>
-                        </div>
-                        <div className='flex items-center justify-between mt-12 '>
-                            <div className='py-2 rounded-md '>
-                                <h1 className='uppercase font-semibold text-[#ffc916] font-roboto text-2xl'>onepluse</h1>
-                            </div>
-                            <div className='hidden group-hover:block'>
-                                <div className='flex items-center space-x-1 mt-2'>
-                                    <div className='hover:bg-[#ffc916] hover:text-black bg-white text-[#ffc916] border-2 border-[#ffcd16] rounded-md px-1 py-1 cursor-pointer '>
-                                        <MdModeEdit className='' />
-                                    </div>
-                                    <div className='hover:bg-[#ffc916] hover:text-black bg-white text-[#ffc916] border-2 border-[#ffc916] rounded-md px-1 py-1 cursor-pointer '>
-                                        <MdDelete className='' />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
                 </div>
             </div >
             <CompanyFormModal

@@ -49,7 +49,7 @@ const productSchema = Yup.object({
 function ProductFormModal({ showModal, refetchPhones, handleShowModal, ModelDetails, is_Edit }) {
 
   let Company = useQuery('company', getAllCompanies)
-  const [company, setCompany] = useState(is_Edit == true ? ModelDetails?.company?.company_name : "");
+  const [company, setCompany] = useState("");
 
   const addPhone = useMutation(AddNewPhone);
   const updatePhone = useMutation(UpdatePhone);
@@ -62,10 +62,14 @@ function ProductFormModal({ showModal, refetchPhones, handleShowModal, ModelDeta
   const { values, errors, resetForm, handleBlur, touched, setFieldValue, handleChange, handleSubmit } =
     useFormik({
       initialValues:
-        JSON.stringify(ModelDetails) != {} ? { company_name: ModelDetails?.company?.company_name, model_name: ModelDetails?.model_name }
-          :
+        is_Edit 
+        ? 
+          { company_name: ModelDetails?.company?.company_name, model_name: ModelDetails?.model_name }
+        :
           initialValues,
       validationSchema: productSchema,
+      enableReinitialize: true,
+
       async onSubmit(data) {
         Object.assign(data, { company_name: company, id: ModelDetails?.id })
         try {
@@ -88,6 +92,10 @@ function ProductFormModal({ showModal, refetchPhones, handleShowModal, ModelDeta
   function handleSelectCompany(event) {
     setCompany(event.target.value)
   };
+
+  React.useEffect(()=>{
+    setCompany(is_Edit == true ? ModelDetails?.company?.company_name : "")
+  },[showModal])
 
   React.useEffect(() => {
     if (addPhone.isSuccess || updatePhone.isSuccess) {
@@ -157,10 +165,10 @@ function ProductFormModal({ showModal, refetchPhones, handleShowModal, ModelDeta
                     className='w-full mt-1 block px-1 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'>
                     <option value="">Select Company</option>
                     {
-                      Company?.data?.data?.all_companies?.map((company, index) => {
+                      Company?.data?.data?.all_companies?.map((item, index) => {
                         return (
                           <option
-                            key={index} value={company.company_name}>{company.company_name}</option>
+                            key={index} value={item.company_name}>{item.company_name}</option>
                         )
                       })
                     }

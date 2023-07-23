@@ -98,7 +98,7 @@ function ProductList() {
             type="search"
             onChange={handlePhoneSearch}
             value={search}
-            placeholder='Search Receipt (BY : Company Name , Model Name)'
+            placeholder='Search Model'
             className='drop-shadow-lg border px-4 py-[6px]  focus:outline-none rounded-l-lg w-2/3'
           />
           <div className='bg-[#5d87ff] px-3 py-[7px] group rounded-r-lg flex justify-center items-center
