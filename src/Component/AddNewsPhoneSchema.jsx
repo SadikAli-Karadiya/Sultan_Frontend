@@ -17,6 +17,7 @@ export const PhoneSchema = Yup.object({
     model: Yup.string().required('Please select model'),
     storage: Yup.string().required('Please select storage'),
     installment: Yup.string().required('Please select installment'),
+    installment_charge: Yup.number().typeError('Please enter only numbers').required('Please enter installment charge'),
     dp: Yup.number().typeError('DP must be a number').positive('DP must be positive')
 });
 
@@ -29,6 +30,7 @@ export const NewPhoneValues = {
     color : "",
     price: "",
     installment: "",
+    installment_charge: "",
     dp: "",
     net_payable: "",
 }

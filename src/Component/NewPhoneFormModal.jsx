@@ -16,22 +16,15 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
 
   const params = useParams();
   let customer_id = params?.id
-  const DATE = new Date();
-  const defaultValue = DATE.toLocaleDateString('en-CA');
-  const [date, setDate] = useState(defaultValue);
   const [isLoading, setIsLoading] = useState();
   const [SelectedCompany, setSelectedCompany] = useState([]);
   const [SelectedModel, setSelectedModel] = useState([]);
-  const [Model, setModel] = useState(is_Edit == true ? PhoneDetails?.phone?.model_name : "");
   const [Phone_Price, setPhonePrice] = useState("");
   const [Ram, setRam] = useState("");
   const [ram, setram] = useState("");
   const [Storage, setstorage] = useState("");
-  const [Model_Name, setModelName] = useState("");
   const [Down_Payment, setDownPayment] = useState("");
   const [SelectInstallment, setSelectInstallment] = useState([]);
-  const [installment, setinstallment] = useState("");
-  const [Company, setCompany] = useState(is_Edit == true ? PhoneDetails?.phone?.company?.company_name : "");
   const Company_Details = useQuery('company', getAllCompanies)
   const specification = useQuery('specification', getallSpecification)
   const Installment = useQuery('installment', getAllInstallment)
@@ -55,6 +48,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
           colour : "",
           price: "",
           installment: "",
+          installment_charge:"",
           dp: "",
           net_payable: "",
         } : NewPhoneValues,
@@ -71,55 +65,22 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
           { admin_id: user.admin_id }
         )
         try {
+          setIsLoading(true)
           const response = await AddNewPurchase(data)
+          setIsLoading(false)
           toast.success(response.data.message);
           resetForm({ values: "" })
           handleModalClose(false);
           navigate(`/Customer/EMI-History/${response?.data?.data?.id}`)
         } catch (err) {
+          setIsLoading(false)
           toast.error(err.response.data.message);
         }
       },
     });
 
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      backgroundColor: "rgb(75 85 99)",
-      borderColor: "rgb(107 114 128)",
-      borderRadius: "8px",
-      minHeight: "44px",
-      height: "44px",
-      boxShadow: state.isFocused ? null : null,
-    }),
-
-    valueContainer: (provided, state) => ({
-      ...provided,
-      height: "44px",
-      padding: "0 6px",
-    }),
-
-    singleValue: (provided) => ({
-      ...provided,
-      color: "white",
-    }),
-
-    input: (provided, state) => ({
-      ...provided,
-      margin: "0px",
-    }),
-    indicatorSeparator: (state) => ({
-      display: "none",
-    }),
-    indicatorsContainer: (provided, state) => ({
-      ...provided,
-      height: "44px",
-    }),
-  };
-
   function handleSelectCompany(event) {
     let company_name = event.target.value
-    setCompany(company_name)
     let Model = Phone?.data?.data?.AllModel?.filter((n) => {
       return n?.company?.company_name == company_name;
     });
@@ -129,7 +90,6 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
 
   function handleSelectModel(event) {
     let Model_name = event.target.value
-    setModel(Model_name)
     let storage = specification?.data?.data?.AllSpecification?.filter((n) => {
       return n?.phone?.model_name == Model_name;
     });
@@ -154,16 +114,21 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
   };
   function handleSelectInstallment(event) {
     let month = event.target.value
-    setinstallment(month)
+    if(month == ''){
+      setFieldValue('installment_charge', '0');
+      setFieldValue('installment', month)
+      setSelectInstallment(0)
+      return;
+    }
     let Charge = Installment?.data?.data?.AllInstallment?.find((n) => {
       return n?.month == month;
     });
     setSelectInstallment(Charge.charges)
     setFieldValue('installment', month)
+    setFieldValue('installment_charge', Charge.charges)
   };
 
   function handleChangeDate(event) {
-    setDate(event.target.value)
     setFieldValue('date', event.target.value)
   };
 
@@ -375,7 +340,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                   <div className="price w-full">
                     <label className="block">
                       <span className="block text-sm font-medium text-white">
-                        Price *
+                        Phone Price
                       </span>
                       <input
                         type="text"
@@ -383,7 +348,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={Phone_Price}
-                        placeholder="Enter Price"
+                        disabled={true}
                         className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
                       />
                       <span className="text-xs font-semibold text-red-600 px-1">
@@ -424,6 +389,25 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                   <div className="dp w-full">
                     <label className="block">
                       <span className="block text-sm font-medium text-white">
+                        Installment Charge *
+                      </span>
+                      <input
+                        type="text"
+                        name="installment_charge"
+                        onChange={(e)=>{setFieldValue('installment_charge', e.target.value); setSelectInstallment(Number(e.target.value));}}
+                        onBlur={handleBlur}
+                        value={values.installment_charge}
+                        placeholder="Enter Installment Charge"
+                        className='w-full mt-1 block px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
+                      />
+                      <span className="text-xs font-semibold text-red-600 px-1">
+                        {errors.installment_charge && touched.installment_charge ? errors.installment_charge : null}
+                      </span>
+                    </label>
+                  </div>
+                  <div className="dp w-full">
+                    <label className="block">
+                      <span className="block text-sm font-medium text-white">
                         Down Payment
                       </span>
                       <input
@@ -440,21 +424,20 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                       </span>
                     </label>
                   </div>
-                  <div className="totalfee w-full">
-                    <label className="block">
-                      <span className="block text-sm font-medium text-white">
-                        Total Amount
-                      </span>
-                      <input
-                        type="text" id='totalfee'
-                        name="net_payable"
-                        disabled={true}
-                        value={Net_playable}
-                        placeholder="Enter Net Payable Amount"
-                        className='w-full  mt-1 block  px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
-                      />
-                    </label>
-                  </div>
+                </div>
+                <div className="w-full mb-5">
+                  <label className="block">
+                    <span className="block text-sm font-medium text-white">
+                      Total Amount
+                    </span>
+                    <input
+                      type="text" id='totalfee'
+                      name="net_payable"
+                      disabled={true}
+                      value={Net_playable}
+                      className='w-full  mt-1 block  px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
+                    />
+                  </label>
                 </div>
               </div>
               <div className="text-right">

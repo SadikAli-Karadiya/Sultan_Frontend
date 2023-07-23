@@ -425,7 +425,6 @@ function CustomerProfile() {
                                         <div className="flex flex-col justify-center items-center ">
                                             <div className="profile_img_div flex justify-center rounded-full items-center border-2 border-gray-500 shadow-lg">
                                                 <img
-                                                    // src={SingleCustomerDetails?.photo ? SingleCustomerDetails?.photo : img}
                                                     src={
                                                         values.photo != ''
                                                             ?
@@ -433,8 +432,7 @@ function CustomerProfile() {
                                                                 ?
                                                                 values.photo
                                                                 :
-                                                                ""
-                                                            // URL.createObjectURL(values.photo)
+                                                                URL.createObjectURL(values.photo)
                                                             :
                                                             values.photo
                                                     }
