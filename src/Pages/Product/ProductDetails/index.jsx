@@ -107,9 +107,6 @@ function ProductDetails() {
                                     Price
                                 </th>
                                 <th scope="col" className="px-6 py-4">
-                                    Colour
-                                </th>
-                                <th scope="col" className="px-6 py-4">
                                     Action
                                 </th>
                             </tr>
@@ -131,9 +128,6 @@ function ProductDetails() {
                                                 </td>
                                                 <td className="px-6 py-5">
                                                     {item.price}
-                                                </td>
-                                                <td className="px-6 py-5 capitalize">
-                                                    {item.colour}
                                                 </td>
                                                 <td className="px-6 py-5">
                                                     <div className='flex justify-center items-center space-x-2'>
