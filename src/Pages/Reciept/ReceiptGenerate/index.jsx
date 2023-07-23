@@ -298,7 +298,7 @@ function GenerateReceipt() {
                     <div className='absolute w-full h-full  z-30 ' >
 
                         <div className="flex justify-center xs:px-4 mt-10  bg-white ">
-                            <div className="absolute xs:h-[81%] md:h-[68%] xl:h-[70%] mx-auto  opacity-100 shadow-2xl rounded bg-white h-full xs:w-[60%]  z-50">
+                            <div className="absolute xs:h-[81%] md:h-[68%] xl:h-[80%] mx-auto  opacity-100 shadow-2xl rounded bg-white h-full xs:w-[60%] xl:w-[65%] z-50">
                                 <div className="flex justify-end">
                                     <button
                                         onClick={(e) => {
@@ -322,11 +322,11 @@ function GenerateReceipt() {
                                         Confirm Payment{" "}
                                     </h1>
                                     <div className="flex xs:flex-col sm:flex-row py-4 justify-between">
-                                        <div className="flex xs:flex-col xs:space-y-2 lg:space-y-1 xl:space-y-2 px-7 text-sm xs:order-2 sm:order-1">
+                                        <div className="flex flex-col xs:space-y-2 lg:space-y-1 xl:space-y-2 px-7 text-sm xs:order-2 sm:order-1">
                                             <div>
                                                 <h2 className="font-bold text-lg tracking-wide uppercase">NAME : {Emi_Details?.data?.data?.SingleEmi?.purchase?.customer?.full_name}</h2>
                                             </div>
-                                            <div className="flex xs:space-y-5 lg:space-y-1 xs:flex-col">
+                                            <div className="flex xs:space-y-5 lg:space-y-1 flex-col">
                                                 <div className="flex xs:flex-col xs:space-y-2 lg:flex-row lg:space-x-5 lg:space-y-0">
                                                     <h2 className="font-roboto">Company : {Emi_Details?.data?.data?.SingleEmi?.purchase?.phone?.company?.company_name}</h2>
                                                     <h2 className="font-roboto">Model : {Emi_Details?.data?.data?.SingleEmi?.purchase?.phone?.model_name}</h2>
@@ -402,8 +402,7 @@ function GenerateReceipt() {
                         </div>
                     </div>
                 )}
-                <div className={`mt-2 bg-student-100 xs:px-5 xl:px-12  py-2 ${model && "opacity-20"} `}
-                >
+                <div className={`mt-2 bg-student-100 xs:px-5 xl:px-12  py-2 ${model && "opacity-20"} `}>
                     <div className="flex justify-between items-center">
                         <h1 className="font-bold text-[#0d0d48] text-2xl ">
                             Generate EMI Receipt

@@ -95,7 +95,7 @@ function CompanyList() {
         <>
             <div className='sm:px-5 xl:px-10 pt-5 h-full'>
                 <div className='flex justify-between items-center mb-10'>
-                    <h1 className='text-2xl font-bold'>All Companies</h1>
+                    <h1 className='text-2xl text-[#0d0d48] font-bold'>All Companies</h1>
                     <div className='flex items-center justify-end pb-5'>
                         <Tippy content="Add New Company">
                             <div

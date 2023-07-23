@@ -337,9 +337,9 @@ function CustomerProfile() {
             photo: CustomerDetail.data.data?.SingleCustomer.photo,
             full_name: CustomerDetail.data.data?.SingleCustomer.full_name,
             mobile: CustomerDetail.data.data?.SingleCustomer.mobile,
-            alternate_no: alternate_no == '' ? '--' : alternate_no,
-            reference_name: reference_name == '' ? '--' : reference_name,
-            reference_mobile: reference_mobile == '' ? '--' : reference_mobile,
+            alternate_no: alternate_no == '' ? '' : alternate_no,
+            reference_name: reference_name == '' ? '' : reference_name,
+            reference_mobile: reference_mobile == '' ? '' : reference_mobile,
             adhar_front: CustomerDetail.data.data?.SingleCustomer.document.adhar_front,
             adhar_back: CustomerDetail.data.data?.SingleCustomer.document.adhar_back,
             pancard: CustomerDetail.data.data?.SingleCustomer.document.pancard,
@@ -350,14 +350,14 @@ function CustomerProfile() {
         setValues(customerData)
     }
 
-    const handleEditPhone = (id) => {
-        let Phone = purchaseDetails.data.data.CustomerAllPurchase?.find((n) => {
-            return n?.id == id;
-        });
-        setIsEdit(true)
-        setPhoneDetails(Phone);
-        setnewPhoneFormModal(true);
-    };
+    // const handleEditPhone = (id) => {
+    //     let Phone = purchaseDetails.data.data.CustomerAllPurchase?.find((n) => {
+    //         return n?.id == id;
+    //     });
+    //     setIsEdit(true)
+    //     setPhoneDetails(Phone);
+    //     setnewPhoneFormModal(true);
+    // };
 
     React.useEffect(() => {
         if (CustomerDetail.data) {

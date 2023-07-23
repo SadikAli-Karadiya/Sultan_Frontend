@@ -3,7 +3,6 @@ import { IoMdInformationCircle } from "react-icons/io"
 import { AiFillEye } from "react-icons/ai";
 import "../../../App.css"
 import { useNavigate, useParams } from "react-router-dom";
-import ChargeFormModal from '../../../Component/ChargeFormModal';
 import { getEmiPurchasebyId } from '../../../utils/apiCalls';
 import { useQuery } from 'react-query'
 import moment from 'moment'
@@ -16,7 +15,6 @@ import { IoIosArrowBack } from "react-icons/io";
 function EMIHistory() {
     const navigate = useNavigate();
     const params = useParams();
-    const [chargeFormModal, setChargeFormModal] = useState(false);
     const [is_Edit, setIsEdit] = useState(false);
     const [EMI_Details, setEMIDetails] = useState();
     const [emiId, setEmiId] = useState(null)
@@ -181,13 +179,6 @@ function EMIHistory() {
                                 )
                         )
                 }
-
-                <ChargeFormModal
-                    showModal={chargeFormModal}
-                    handleShowModal={setChargeFormModal}
-                    EMI_Details={EMI_Details}
-                    is_Edit={is_Edit}
-                />
             </div>
         </>
     )
