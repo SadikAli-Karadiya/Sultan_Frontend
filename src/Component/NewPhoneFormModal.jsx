@@ -52,7 +52,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
           storage: "",
           model: PhoneDetails?.phone?.model_name,
           iemi: "",
-          color : "",
+          colour : "",
           price: "",
           installment: "",
           dp: "",
@@ -353,19 +353,19 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                   <div className="price w-full">
                     <label className="block">
                       <span className="block text-sm font-medium text-white">
-                        Color *
+                        Colour *
                       </span>
                       <input
                         type="text"
-                        name="color"
+                        name="colour"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.color}
-                        placeholder="Enter Color"
+                        value={values.colour}
+                        placeholder="Enter Colour"
                         className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
                       />
                       <span className="text-xs font-semibold text-red-600 px-1">
-                        {errors.color && touched.color ? errors.color : null}
+                        {errors.colour && touched.colour ? errors.colour : null}
 
                       </span>
                     </label>

@@ -1,11 +1,10 @@
 import { React, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { customerSchema, initialValues } from "../../../Component/CustomerSchema";
 import "../../Customer/CustomerRegister/Customerform.css"
 import { AddCustomer } from "../../../utils/apiCalls"
-import { useMutation, useQuery } from 'react-query'
 const defaultadharfront = "/images/adhar.webp";
 const defaultadharback = "/images/adhar_back.jpg";
 const defaultpan = "/images/pan.webp";
@@ -23,7 +22,6 @@ function CustomerRegister() {
     const [Adhar_back, setadharback] = useState("");
     const [Pan, setpan] = useState("");
     const [Bill, setbill] = useState("");
-    const [isLoadingOnSubmit, setIsLoadingOnSubmit] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
     const { values, touched, resetForm, errors, handleChange, handleSubmit, handleBlur } =
@@ -352,7 +350,7 @@ function CustomerRegister() {
                                 </div>
                             </div>
                             <div className="flex pt-10 ">
-                                <button type="button" disabled={isLoadingOnSubmit} className="px-8 mr-4 h-10  border-[#0d0d48] border-2 hover:bg-[#0d0d48] text-[#0d0d48] hover:text-white font-medium rounded-md tracking-wider flex justify-center items-center" onClick={handleClick}>
+                                <button type="button" disabled={isSubmitting} className={`${isSubmitting ? 'opacity-60' : ''}px-8 mr-4 h-10  border-[#0d0d48] border-2 hover:bg-[#0d0d48] text-[#0d0d48] hover:text-white font-medium rounded-md tracking-wider flex justify-center items-center`} onClick={handleClick}>
                                     CLEAR
                                 </button>
                                 <button type="submit"

@@ -606,8 +606,7 @@ function CustomerProfile() {
                                                                             ?
                                                                             values.adhar_front
                                                                             :
-                                                                            ""
-                                                                        // URL.createObjectURL(values.adhar_front)
+                                                                            URL.createObjectURL(values.adhar_front)
                                                                         :
                                                                         values.adhar_front
                                                                 }
@@ -657,8 +656,7 @@ function CustomerProfile() {
                                                                             ?
                                                                             values.adhar_back
                                                                             :
-                                                                            ""
-                                                                        // URL.createObjectURL(values.adhar_back)
+                                                                            URL.createObjectURL(values.adhar_back)
                                                                         :
                                                                         values.adhar_back
                                                                 }
@@ -708,8 +706,8 @@ function CustomerProfile() {
                                                                             ?
                                                                             values.pancard
                                                                             :
-                                                                            ""
-                                                                        // URL.createObjectURL(values.pancard)
+                                                                            
+                                                                            URL.createObjectURL(values.pancard)
                                                                         :
                                                                         values.pancard
                                                                 }
@@ -760,8 +758,7 @@ function CustomerProfile() {
                                                                             ?
                                                                             values.light_bill
                                                                             :
-                                                                            ""
-                                                                        // URL.createObjectURL(values.light_bill)
+                                                                            URL.createObjectURL(values.light_bill)
                                                                         :
                                                                         values.light_bill
                                                                 }
@@ -861,6 +858,9 @@ function CustomerProfile() {
                                                 Model
                                             </th>
                                             <th scope="col" className="px-6 py-4">
+                                                Colour
+                                            </th>
+                                            <th scope="col" className="px-6 py-4">
                                                 EMI Type
                                             </th>
                                             <th scope="col" className="px-6 py-4">
@@ -905,6 +905,9 @@ function CustomerProfile() {
                                                                     </td>
                                                                     <td className="px-6 py-5 capitalize">
                                                                         {item.specification.phone.model_name}
+                                                                    </td>
+                                                                    <td className="px-6 py-5 capitalize">
+                                                                        {item.colour}
                                                                     </td>
                                                                     <td className="px-6 py-5">
                                                                         {item.installment.month} Months
