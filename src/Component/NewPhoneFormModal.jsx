@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Modal } from "../Component/Modal";
-import * as Yup from "yup";
 import { useFormik } from "formik";
+import moment from 'moment'
 import { NewPhoneValues, PhoneSchema } from "../Component/AddNewsPhoneSchema";
 import { getAllPhone, getAllCompanies, getallSpecification, getAllInstallment, AddNewPurchase } from "../utils/apiCalls";
 import { useQuery } from 'react-query'
@@ -25,6 +25,8 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
   const [Storage, setstorage] = useState("");
   const [Down_Payment, setDownPayment] = useState("");
   const [SelectInstallment, setSelectInstallment] = useState([]);
+  const [Net_playable, setNetPlayable] = useState(0);
+
   const Company_Details = useQuery('company', getAllCompanies)
   const specification = useQuery('specification', getallSpecification)
   const Installment = useQuery('installment', getAllInstallment)
@@ -35,11 +37,9 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
     useFormik({
       initialValues:
         is_Edit ? {
-          date: PhoneDetails?.createdAt,
+          date:  moment(PhoneDetails?.createdAt).format("yyyy-MM-D"),
           Company: PhoneDetails?.phone?.company?.company_name,
           Model: PhoneDetails?.phone?.model_name,
-
-          date: PhoneDetails?.createdAt,
           company_name: PhoneDetails?.phone?.company?.company_name,
           ram: "",
           storage: "",
@@ -132,11 +132,20 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
     setFieldValue('date', event.target.value)
   };
 
-  let Net_playable = (SelectInstallment + Phone_Price)
   const handleModalClose = () => {
     resetForm({ values: "" })
+    setNetPlayable(0)
+    setram("")
+    setRam("")
+    setstorage("")
+    setPhonePrice("")
+    setDownPayment('')
     handleShowModal(false);
   };
+
+  React.useEffect(()=>{
+    setNetPlayable(SelectInstallment + Phone_Price)
+  },[SelectInstallment, Phone_Price])
 
   if (!showModal) {
     return <></>;
@@ -357,6 +366,27 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                       </span>
                     </label>
                   </div>
+                  <div className="dp w-full">
+                    <label className="block">
+                      <span className="block text-sm font-medium text-white">
+                        Down Payment
+                      </span>
+                      <input
+                        type="text"
+                        name="dp"
+                        onChange={e => { setDownPayment(e.target.value); setFieldValue('dp', e.target.value) }}
+                        onBlur={handleBlur}
+                        value={Down_Payment}
+                        placeholder="Enter Down Payment"
+                        className='w-full mt-1 block px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
+                      />
+                      <span className="text-xs font-semibold text-red-600 px-1">
+                        {errors.dp && touched.dp ? errors.dp : null}
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <div className="flex xs:flex-col xs:gap-0 md:flex-row md:gap-4 xl:gap-4 w-full ">
                   <div className="installment w-full">
                     <label className="block">
                       <span className="block text-sm font-medium text-white">
@@ -384,8 +414,6 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                       </span>
                     </label>
                   </div>
-                </div>
-                <div className="flex xs:flex-col xs:gap-0 md:flex-row md:gap-4 xl:gap-4 w-full ">
                   <div className="dp w-full">
                     <label className="block">
                       <span className="block text-sm font-medium text-white">
@@ -402,25 +430,6 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                       />
                       <span className="text-xs font-semibold text-red-600 px-1">
                         {errors.installment_charge && touched.installment_charge ? errors.installment_charge : null}
-                      </span>
-                    </label>
-                  </div>
-                  <div className="dp w-full">
-                    <label className="block">
-                      <span className="block text-sm font-medium text-white">
-                        Down Payment
-                      </span>
-                      <input
-                        type="text"
-                        name="dp"
-                        onChange={e => { setDownPayment(e.target.value); setFieldValue('dp', e.target.value) }}
-                        onBlur={handleBlur}
-                        value={Down_Payment}
-                        placeholder="Enter Down Payment"
-                        className='w-full mt-1 block px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
-                      />
-                      <span className="text-xs font-semibold text-red-600 px-1">
-                        {errors.dp && touched.dp ? errors.dp : null}
                       </span>
                     </label>
                   </div>

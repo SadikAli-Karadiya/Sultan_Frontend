@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import moment from 'moment'
 
 export const PhoneSchema = Yup.object({
     iemi: Yup.string()
@@ -22,7 +23,7 @@ export const PhoneSchema = Yup.object({
 });
 
 export const NewPhoneValues = {
-    date: "",
+    date: moment(new Date()).format("yyyy-MM-D"),
     company_name: "",
     storage: "",
     model: "",
