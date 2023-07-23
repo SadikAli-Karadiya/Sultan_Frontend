@@ -52,6 +52,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
           storage: "",
           model: PhoneDetails?.phone?.model_name,
           iemi: "",
+          color : "",
           price: "",
           installment: "",
           dp: "",
@@ -215,9 +216,9 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
 
         <Modal.Description>
           <div className="px-4 py-4">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="" onSubmit={handleSubmit}>
               <div className="flex flex-col justify-center items-center w-full xl:gap-1">
-                <div className="flex xs:flex-col xs:gap-0 md:flex-row md:gap-4 xl:gap-4 w-full">
+                <div className="flex items-center xs:flex-col xs:gap-0 md:flex-row md:gap-4 xl:gap-4 w-full">
                   <div className="date w-full">
                     <label className="block">
                       <span className="block text-sm font-medium text-white">
@@ -264,28 +265,12 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                     </label>
                   </div>
                 </div>
-                <div className="flex items-center xs:flex-col xs:gap-0 md:flex-row md:gap-4 xl:gap-4 w-full pb-6">
+                <div className="flex items-center xs:flex-col xs:gap-0 md:flex-row md:gap-4 xl:gap-4 w-full">
                   <div className="selectinst w-full">
                     <label className="block">
                       <span className="block text-sm font-medium text-white">
                         Model *
                       </span>
-                      {/* <div className='w-full mt-1'>
-                        <CreatableSelect
-                          className='w-full'
-                          isClearable
-                          isDisabled={isLoading}
-                          isLoading={isLoading}
-                          onChange={(e) => { setFieldValue('model_name', e.value); setModel(e) }}
-                          onBlur={handleBlur}
-                          placeholder="Select Model"
-                          options={SelectedCompany?.map(item => {
-                            return { value: item?.model_name, label: item?.model_name };
-                          })
-                          }
-                          name='storage'
-                        />
-                      </div> */}
                       <select
                         name="model"
                         id="model"
@@ -365,8 +350,28 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                       </span>
                     </label>
                   </div>
+                  <div className="price w-full">
+                    <label className="block">
+                      <span className="block text-sm font-medium text-white">
+                        Color *
+                      </span>
+                      <input
+                        type="text"
+                        name="color"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.color}
+                        placeholder="Enter Color"
+                        className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
+                      />
+                      <span className="text-xs font-semibold text-red-600 px-1">
+                        {errors.color && touched.color ? errors.color : null}
+
+                      </span>
+                    </label>
+                  </div>
                 </div>
-                <div className="flex xs:flex-col xs:gap-0 md:flex-row md:gap-4 xl:gap-4 w-full pb-6">
+                <div className="flex items-center xs:flex-col xs:gap-0 md:flex-row md:gap-4 xl:gap-4 w-full ">
                   <div className="price w-full">
                     <label className="block">
                       <span className="block text-sm font-medium text-white">
@@ -428,7 +433,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                         onBlur={handleBlur}
                         value={Down_Payment}
                         placeholder="Enter Down Payment"
-                        className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
+                        className='w-full mt-1 block px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
                       />
                       <span className="text-xs font-semibold text-red-600 px-1">
                         {errors.dp && touched.dp ? errors.dp : null}
@@ -446,13 +451,13 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                         disabled={true}
                         value={Net_playable}
                         placeholder="Enter Net Payable Amount"
-                        className='w-full 2xl:w-60 mt-1 block  px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
+                        className='w-full  mt-1 block  px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
                       />
                     </label>
                   </div>
                 </div>
               </div>
-              <div className="mt-5 text-right">
+              <div className="text-right">
                 {
                   is_Edit == true ?
                     <button

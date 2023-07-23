@@ -64,15 +64,15 @@ function Receipt() {
         })
     };
 
-    useEffect(()=>{
-        if(deleteReceipt.isError){
+    useEffect(() => {
+        if (deleteReceipt.isError) {
             toast.error(deleteReceipt.error.response.data.message)
         }
-        else if(deleteReceipt.isSuccess){
+        else if (deleteReceipt.isSuccess) {
             toast.success(deleteReceipt.data?.data.message)
             navigate(-1)
         }
-    },[deleteReceipt.isSuccess, deleteReceipt.isError])
+    }, [deleteReceipt.isSuccess, deleteReceipt.isError])
 
     return (
         <>
@@ -87,12 +87,12 @@ function Receipt() {
                     </div>
                 </div>
                 <div className="flex justify-center items-center px-5">
-                    <div ref={printRef} className="m-5 py-7 bg-white w-[790px] shadow-xl rounded-md h-full ">
-                        <div className="px-10 flex items-center justify-between">
+                    <div ref={printRef} className="m-3 py-7 bg-white w-[790px] border h-[550px] shadow-xl rounded-md ">
+                        <div className="px-7 flex items-center justify-between">
                             <div className="flex items-center ">
                                 <div className="logo">
-                                     <h2 className="text-xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold">SULTAN </h2>
-                                     <h2 className="text-xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold">MOBILE </h2>
+                                    <h2 className="text-xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold">SULTAN </h2>
+                                    <h2 className="text-xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold">MOBILE </h2>
                                 </div>
                                 <div className="address pl-20">
                                     <span>Phone : +91 7600199352</span>
@@ -107,7 +107,7 @@ function Receipt() {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex justify-between w-full px-10 pt-4 space-x-5">
+                        <div className="flex justify-between w-full px-7 pt-4 space-x-5">
                             <div className="flex items-center w-[65%] py-5">
                                 <h1 className=" font-semibold w-[230px]">Customer Name <span className="ml-5">:</span></h1>
                                 <div className="text-xl w-full border-dotted border-b-2 border-slate-300">
@@ -125,7 +125,7 @@ function Receipt() {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex justify-between w-full px-10 ">
+                        <div className="flex justify-between w-full px-7 ">
                             <div className="flex items-center w-full">
                                 <h1 className=" font-semibold w-[200px]">Amount <span className="ml-[80px] ">:  </span> </h1>
                                 <div className="text-xl w-full border-dotted border-b-2 border-slate-300">
@@ -133,50 +133,54 @@ function Receipt() {
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-slate-200 mx-16 rounded-full items-center px-6 py-2 h-12 flex  ml-48 my-4">
+                        <div className="bg-slate-200 mx-16 rounded-full items-center px-6 py-2 h-12 flex  ml-48 mt-5">
                             <BiRupee className="text-3xl mt-1" />
                             <h1 className="font-bold ml-3 text-3xl">
                                 {data?.data?.data?.SingleTransaction?.amount}
                                 /-</h1>
                         </div>
-                        <div className="px-10 pt-5">
-                            <div className="flex items-center">
-                                <h1 className=" font-semibold">Extra Charge </h1>
-                                <span className="pl-1 text-lg">:</span>
-                                <div className="ml-2 font-semibold rounded-md text-slate-600">
-                                    <h1>{data?.data?.data?.SingleTransaction?.receipt?.extra_charge}</h1>
+                        <div className="flex justify-between w-full px-7 space-x-8">
+                            <div className="flex items-center w-[50%] py-5">
+                                <h1 className=" font-semibold w-[230px]">Extra Charge <span className="ml-5">:</span></h1>
+                                <div className="text-xl w-full border-dotted border-b-2 border-slate-300">
+                                    <span className=" uppercase font-semibold text-[16px] space-x-2">
+                                        <span>{data?.data?.data?.SingleTransaction?.receipt?.extra_charge}</span>
+                                    </span>
                                 </div>
                             </div>
-                        </div>
-                        <div className="flex justify-start w-full px-10 pt-5">
-                            <h1 className=" font-semibold w-40">Payment For <span className="ml-5">:</span></h1>
-                            <div className="ml-10 flex items-center text-xl w-full space-x-2 border-dotted border-b-2 border-slate-300">
-                                <span className=" uppercase font-semibold text-[16px] ">
-                                    {data?.data?.data?.SingleTransaction?.receipt?.emi?.type}
-                                </span>
-                                <div className="uppercase font-semibold text-[16px] space-x-2 ">
-                                    (
-                                    <span className="">
+                            <div className="flex items-center w-[50%]">
+                                <h1 className=" font-semibold w-[200px]">
+                                    Payment For
+                                    <span className="ml-3 "> :</span>
+                                </h1>
+                                <div className="text-xl w-full border-dotted border-b-2 border-slate-300">
+                                    <span className="uppercase font-semibold text-[16px]  ">
                                         {data?.data?.data?.emiCount}
                                     </span>
-
-                                    )
                                 </div>
                             </div>
                         </div>
-                        <div className="px-10 pt-5">
-                            <div className="flex">
-                                <div className="w-64 flex items-center">
+                        <div className="px-7">
+                            <div className="flex justify-between w-full">
+                                <div className="flex items-center">
                                     <h1 className=" font-semibold">Model </h1>
                                     <span className="pl-1 text-lg">:</span>
-                                    <div className="ml-2 font-semibold rounded-md text-slate-600">
+                                    <div className="ml-2 flex items-center space-x-2 font-semibold rounded-md text-slate-600">
                                         <h1>
                                             {`${data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.phone.company.company_name} 
                                             ${data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.phone.model_name}`}
                                         </h1>
+                                        <span>( {data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.ram} x {data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.storage} )</span>
                                     </div>
                                 </div>
-                                <div className="w-64 flex items-center">
+                                <div className="flex items-center">
+                                    <h1 className=" font-semibold">Installment Type </h1>
+                                    <span className="pl-1 text-lg">:</span>
+                                    <div className="ml-2 font-semibold rounded-md text-slate-600">
+                                        <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.installment.month} Months</h1>
+                                    </div>
+                                </div>
+                                {/* <div className="w-64 flex items-center">
                                     <h1 className=" font-semibold">RAM </h1>
                                     <span className="pl-1 text-lg">:</span>
                                     <div className="ml-2 font-semibold rounded-md text-slate-600">
@@ -193,35 +197,26 @@ function Receipt() {
                                             {data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.storage}
                                         </h1>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
-                        <div className="px-10 pt-5">
-                            <div className="flex items-center">
-                                <h1 className=" font-semibold">Installment Type </h1>
-                                <span className="pl-1 text-lg">:</span>
-                                <div className="ml-2 font-semibold rounded-md text-slate-600">
-                                    <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.installment.month} Months</h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="px-10 pt-5">
+                        <div className="px-7 pt-5">
                             <div className="flex justify-between space-y-1">
-                                <div className="flex items-center w-64">
+                                <div className="flex items-center">
                                     <h1 className=" font-semibold">Total Amount </h1>
                                     <span className="pl-1 text-lg">:</span>
                                     <div className="ml-2 font-semibold rounded-md text-slate-600">
                                         <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.net_amount}</h1>
                                     </div>
                                 </div>
-                                <div className="flex items-center w-64">
+                                <div className="flex items-center ">
                                     <h1 className=" font-semibold">Paid Amount </h1>
                                     <span className="pl-1 text-lg">:</span>
                                     <div className="ml-2 font-semibold  rounded-md text-slate-600 ">
                                         <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.net_amount - data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.pending_amount}</h1>
                                     </div>
                                 </div>
-                                <div className="flex items-center w-64">
+                                <div className="flex items-center">
                                     <h1 className=" font-semibold">Pending Amount </h1>
                                     <span className="pl-1 text-lg">:</span>
                                     <div className="ml-2 font-semibold rounded-md text-slate-600 ">
@@ -229,7 +224,7 @@ function Receipt() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex mt-10 justify-between">
+                            <div className="flex mt-14 justify-between">
                                 <div className="flex items-start text-slate-600">
                                     <h1 className="font-semibold">Payment By</h1>
                                     <div className="flex flex-col items-start ml-1">
