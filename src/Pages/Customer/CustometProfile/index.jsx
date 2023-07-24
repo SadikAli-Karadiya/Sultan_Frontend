@@ -371,7 +371,6 @@ function CustomerProfile() {
                     }
                 }
                 catch(err){
-                    console.log(err)
                     if(err instanceof AxiosError){
                         toast.error(err.response.data.message)
                     }

@@ -32,7 +32,7 @@ function InstallmentList() {
     const customersByInstallment = useMutation(getCustomersByInstallment)
     const [pageNo, setPageNo] = useState(1);
     const purchase = useQuery(['purchase', pageNo], () => getAllPurchase({ pageNo: pageNo - 1, }))
-    console.log(customersByInstallment?.data?.data?.allCustomers)
+
     const bgColors = [
         "#fa8a6b30",
         "#5d88ff24",
@@ -55,8 +55,6 @@ function InstallmentList() {
         "#7e1b1f",
         "#ca8a04",
     ];
-
-    console.log(installment , "installment")
 
     const handleMouseEnterEdit = () => {
         setIsHoverEdit(true);

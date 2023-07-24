@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom'
+import { Route, HashRouter, Routes, Navigate } from 'react-router-dom'
 import PrivateRoutes from './PrivateRoutes'
 import PublicRoutes from './PublicRoutes'
 import { PhoneContext } from '../PhoneContext'
@@ -10,7 +10,7 @@ function AppRoutes() {
     const {token} = useContext(PhoneContext)
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <ErrorBoundry>
                 <Routes>
                     {token ? (
@@ -25,7 +25,7 @@ function AppRoutes() {
                     )}
                 </Routes>
             </ErrorBoundry>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
 
