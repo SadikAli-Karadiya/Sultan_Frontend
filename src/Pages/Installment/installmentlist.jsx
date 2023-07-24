@@ -56,6 +56,7 @@ function InstallmentList() {
         "#ca8a04",
     ];
 
+    console.log(installment , "installment")
 
     const handleMouseEnterEdit = () => {
         setIsHoverEdit(true);
@@ -360,69 +361,69 @@ function InstallmentList() {
                             </tr>
                         </thead>
                         <tbody className="bg-white text-black items-center  overflow-x-scroll xl:overflow-x-hidden 2xl:overflow-x-hidden">
-                        {
-                            customersByInstallment.isLoading
-                            ?
-                                <tr>
-                                    <td colSpan="8">
-                                        <LoaderSmall />
-                                    </td>
-                                </tr>
-                            :
-                                selectedEmiCustomer?.length > 0 
-                                ? (
-                                selectedEmiCustomer?.map((item, index) => {
-                                    return (
-                                            <tr key={index} className="border-b">
-                                                <th className="py-5 px-6 font-normal">
-                                                    {index + 1}
-                                                </th>
-                                                <td className="px-6 py-5 font-semibold  text-slate-700 ">
-                                                    {item.customer.full_name}
-                                                </td>
-                                                <td className="px-6 py-5 capitalize">
-                                                    {item?.customer?.mobile}
-                                                </td>
-                                                <td className="px-6 py-5 capitalize">
-                                                    {item?.specification.phone?.company?.company_name} | {item?.specification.phone?.model_name}
-                                                </td>
-                                                <td className="px-6 py-5 capitalize">
-                                                    {item?.specification.ram} | {item?.specification.storage}
-                                                </td>
-                                                <td className="px-6 py-5 capitalize">
-                                                    {item?.net_amount}
-                                                </td>
-                                                <td className="px-6 py-5 capitalize">
-                                                    {item?.pending_amount}
-                                                </td>
-                                                <td className="px-6 py-5">
-                                                    <div className="flex justify-center items-center">
-                                                        <Tippy content="Customer Profile">
-                                                            <div>
-                                                                <AiFillEye
-                                                                    className="xs:text-base md:text-sm lg:text-[19px] hover:cursor-pointer "
-                                                                    onClick={() =>
-                                                                        navigate(`/InstallmentList/profile-detail/${item.customer.id}`)
-                                                                    }
-                                                                />
+                            {
+                                customersByInstallment.isLoading
+                                    ?
+                                    <tr>
+                                        <td colSpan="8">
+                                            <LoaderSmall />
+                                        </td>
+                                    </tr>
+                                    :
+                                    selectedEmiCustomer?.length > 0
+                                        ? (
+                                            selectedEmiCustomer?.map((item, index) => {
+                                                return (
+                                                    <tr key={index} className="border-b">
+                                                        <th className="py-5 px-6 font-normal">
+                                                            {index + 1}
+                                                        </th>
+                                                        <td className="px-6 py-5 font-semibold  text-slate-700 ">
+                                                            {item.customer.full_name}
+                                                        </td>
+                                                        <td className="px-6 py-5 capitalize">
+                                                            {item?.customer?.mobile}
+                                                        </td>
+                                                        <td className="px-6 py-5 capitalize">
+                                                            {item?.specification.phone?.company?.company_name} | {item?.specification.phone?.model_name}
+                                                        </td>
+                                                        <td className="px-6 py-5 capitalize">
+                                                            {item?.specification.ram} | {item?.specification.storage}
+                                                        </td>
+                                                        <td className="px-6 py-5 capitalize">
+                                                            {item?.net_amount}
+                                                        </td>
+                                                        <td className="px-6 py-5 capitalize">
+                                                            {item?.pending_amount}
+                                                        </td>
+                                                        <td className="px-6 py-5">
+                                                            <div className="flex justify-center items-center">
+                                                                <Tippy content="Customer Profile">
+                                                                    <div>
+                                                                        <AiFillEye
+                                                                            className="xs:text-base md:text-sm lg:text-[19px] hover:cursor-pointer "
+                                                                            onClick={() =>
+                                                                                navigate(`/InstallmentList/profile-detail/${item.customer.id}`)
+                                                                            }
+                                                                        />
+                                                                    </div>
+                                                                </Tippy>
                                                             </div>
-                                                        </Tippy>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })
+                                        )
+                                        : (
+                                            <tr>
+                                                <td colSpan="8">
+                                                    <div className='flex justify-center items-center w-full rounded-b-lg py-[5px] text-red-900 space-x-4 bg-red-200'>
+                                                        <FaUsers className='text-2xl' />
+                                                        <h1 className='text-sm font-bold'>No customers </h1>
                                                     </div>
                                                 </td>
                                             </tr>
-                                    )
-                                })
-                                ) 
-                                : (
-                                    <tr>
-                                        <td colSpan="8">
-                                            <div className='flex justify-center items-center w-full rounded-b-lg py-[5px] text-red-900 space-x-4 bg-red-200'>
-                                                <FaUsers className='text-2xl' />
-                                                <h1 className='text-sm font-bold'>No customers </h1>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )}
+                                        )}
                         </tbody>
                     </table>
                 </div>
@@ -442,7 +443,7 @@ function InstallmentList() {
 
                 <InstallmentFormModal
                     showModal={installmentFormModal}
-                    refetchInstallments ={installment.refetch}
+                    refetchInstallments={installment.refetch}
                     handleShowModal={setInstallmentFormModal}
                     InstallmentDetails={is_Edit ? InstallmentDetails : {}}
                     is_Edit={is_Edit}

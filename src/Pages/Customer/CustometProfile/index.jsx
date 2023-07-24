@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import "../../Customer/CustomerRegister/Customerform.css"
 import { FaUserEdit } from "react-icons/fa"
 import { AiFillEye } from "react-icons/ai";
-import { FiEdit } from "react-icons/fi";
 import { BsPhone } from "react-icons/bs";
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
@@ -350,14 +349,42 @@ function CustomerProfile() {
         setValues(customerData)
     }
 
-    // const handleEditPhone = (id) => {
-    //     let Phone = purchaseDetails.data.data.CustomerAllPurchase?.find((n) => {
-    //         return n?.id == id;
-    //     });
-    //     setIsEdit(true)
-    //     setPhoneDetails(Phone);
-    //     setnewPhoneFormModal(true);
-    // };
+    const handleDeletePhone = async (id) => {
+        Swal.fire({
+            title: "Are you sure to delete phone?",
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Delete",
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false
+        
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try{
+                    const response = await DeletePurchase(id);
+                    if (response.data?.success == true) {
+                        purchaseDetails.refetch();
+                        toast.success(response.data?.message);
+                    }
+                }
+                catch(err){
+                    console.log(err)
+                    if(err instanceof AxiosError){
+                        toast.error(err.response.data.message)
+                    }
+                    else{
+                        toast.error('Failed to delete phone')
+                    }
+                }
+                finally {
+                    Swal.hideLoading(); 
+                }
+            }
+        });
+    };
 
     React.useEffect(() => {
         if (CustomerDetail.data) {
@@ -704,7 +731,7 @@ function CustomerProfile() {
                                                                             ?
                                                                             values.pancard
                                                                             :
-                                                                            
+
                                                                             URL.createObjectURL(values.pancard)
                                                                         :
                                                                         values.pancard
@@ -844,7 +871,7 @@ function CustomerProfile() {
                                 <table
                                     className="w-full bg-slate-100 text-sm text-center "
                                     id="table-to-xls">
-                                    <thead className="text-xs text-gray-700 bg-class3-50 uppercase  ">
+                                    <thead className="text-xs text-gray-700 bg-class3-50 uppercase">
                                         <tr className="text-black text-xs ">
                                             <th scope="col" className="pl-3 py-4">
                                                 Date
@@ -887,13 +914,13 @@ function CustomerProfile() {
                                                 </tr>
                                             </tbody>
                                             :
-                                            <tbody className=" bg-white items-center bg  overflow-x-scroll xl:overflow-x-hidden 2xl:overflow-x-hidden">
+                                            <tbody className=" bg-white  items-center bg  overflow-x-scroll xl:overflow-x-hidden 2xl:overflow-x-hidden">
                                                 {
                                                     purchaseDetails?.data?.data?.CustomerAllPurchase?.length > 0
                                                         ?
                                                         purchaseDetails?.data?.data?.CustomerAllPurchase?.map((item, index) => {
                                                             return (
-                                                                <tr key={index} className=" border-b">
+                                                                <tr key={index} className="border-b">
 
                                                                     <td className="px-6 py-5 ">
                                                                         {moment(item.createdAt).format("DD / MM / YYYY")}
@@ -926,6 +953,17 @@ function CustomerProfile() {
                                                                                     className="xs:text-base md:text-sm lg:text-[19px] hover:cursor-pointer "
                                                                                     onClick={() =>
                                                                                         navigate(`/Customer/EMI-History/${item.id}`)}
+                                                                                />
+                                                                            </div>
+                                                                        </Tippy>
+                                                                        <Tippy content="Phone Delete">
+                                                                            <div className="flex justify-center items-center">
+                                                                                <MdDelete
+                                                                                    className="xs:text-base md:text-sm lg:text-[19px] text-red-500 hover:cursor-pointer "
+                                                                                    onClick={(e) => {
+                                                                                        e.stopPropagation();
+                                                                                        handleDeletePhone(item.id)
+                                                                                    }}
                                                                                 />
                                                                             </div>
                                                                         </Tippy>

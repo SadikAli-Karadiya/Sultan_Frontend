@@ -217,7 +217,7 @@ function CompanyList() {
                         </div>
                     )}
                 </div>
-            </div >
+            </div>
             <CompanyFormModal
                 showModal={CompanyModal}
                 refetchCompanies={companies.refetch}
