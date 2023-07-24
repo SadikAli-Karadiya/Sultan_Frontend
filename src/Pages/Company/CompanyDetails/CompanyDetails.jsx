@@ -154,7 +154,7 @@ function ProductList() {
                                   ?
                                   item.specifications.map((specs, i) => {
                                     return (
-                                      <span key={i}>
+                                      <span className='' key={i}>
                                         {`${specs.ram}/${specs.storage}`}
                                         {
                                           i < item.specifications.length - 1

@@ -365,8 +365,8 @@ function CustomerProfile() {
             if (result.isConfirmed) {
                 try{
                     const response = await DeletePurchase(id);
-                    console.log(response)
                     if (response.data?.success == true) {
+                        purchaseDetails.refetch();
                         toast.success(response.data?.message);
                     }
                 }
@@ -871,7 +871,7 @@ function CustomerProfile() {
                                 <table
                                     className="w-full bg-slate-100 text-sm text-center "
                                     id="table-to-xls">
-                                    <thead className="text-xs text-gray-700 bg-class3-50 uppercase  ">
+                                    <thead className="text-xs text-gray-700 bg-class3-50 uppercase">
                                         <tr className="text-black text-xs ">
                                             <th scope="col" className="pl-3 py-4">
                                                 Date
@@ -914,13 +914,13 @@ function CustomerProfile() {
                                                 </tr>
                                             </tbody>
                                             :
-                                            <tbody className=" bg-white items-center bg  overflow-x-scroll xl:overflow-x-hidden 2xl:overflow-x-hidden">
+                                            <tbody className=" bg-white  items-center bg  overflow-x-scroll xl:overflow-x-hidden 2xl:overflow-x-hidden">
                                                 {
                                                     purchaseDetails?.data?.data?.CustomerAllPurchase?.length > 0
                                                         ?
                                                         purchaseDetails?.data?.data?.CustomerAllPurchase?.map((item, index) => {
                                                             return (
-                                                                <tr key={index} className=" border-b">
+                                                                <tr key={index} className="border-b">
 
                                                                     <td className="px-6 py-5 ">
                                                                         {moment(item.createdAt).format("DD / MM / YYYY")}
