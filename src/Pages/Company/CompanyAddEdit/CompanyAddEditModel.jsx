@@ -9,8 +9,6 @@ import { AddCompany, EditCompany } from '../../../utils/apiCalls';
 
 function CompanyFormModal({ showModal, handleShowModal, refetchCompanies, is_Edit, CompanyDetails }) {
 
-  // let id = InstallmentDetails?.id;
-
   const addCompany = useMutation(AddCompany);
   const updateCompany = useMutation(EditCompany);
 
@@ -66,12 +64,12 @@ function CompanyFormModal({ showModal, handleShowModal, refetchCompanies, is_Edi
       validationSchema: companySchema,
       enableReinitialize: true,
       async onSubmit(data) {
-        {
-          is_Edit == true ?
-            Object.assign(data, { id: CompanyDetails.id })
-            :
-            null
-        }
+        // {
+        //   is_Edit == true ?
+        //     Object.assign(data, { id: CompanyDetails.id })
+        //     :
+        //     null
+        // }
         try {
           if (is_Edit == true) {
             updateCompany.mutate(data)

@@ -37,7 +37,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
   const Installment = useQuery('installment', getAllInstallment)
   const Phone = useQuery('phone', getAllPhone)
   const navigate = useNavigate();
-
+  console.log(Phone)
   const { values, touched, resetForm, errors, setFieldValue, handleChange, handleSubmit, handleBlur } =
     useFormik({
       initialValues:
