@@ -53,12 +53,12 @@ function Login() {
             <section className="h-full w-full flex justify-center items-center ">
                 <div className="flex w-full h-screen overflow-hidden">
                     <div className="xl:flex flex-1 justify-center items-center hidden ">
-                        <img src="/images/login.jpg" alt="" />
+                        <img src="images/login.jpg" alt="" />
                     </div>
                     <div className="flex flex-1 flex-col justify-start mt-5">
                         <div className="flex  justify-end xl:justify-end items-end px-3 sm:pr-10">
                             {/* <img
-                                src="/images/logo.png"
+                                src="images/logo.png"
                                 alt=""
                                 className=" w-28 lg:w-36"
                                 id="logo"

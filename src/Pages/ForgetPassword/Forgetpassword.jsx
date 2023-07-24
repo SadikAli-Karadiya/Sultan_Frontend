@@ -7,7 +7,7 @@ import * as Yup from "yup"
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import "yup-phone"
-const image = "/7xm.xyz172560.jpg"
+const image = "7xm.xyz172560.jpg"
 
 const signUpSchema = Yup.object({
   email: Yup.string().email().required("Please enter your email")

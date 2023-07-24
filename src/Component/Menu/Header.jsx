@@ -10,7 +10,7 @@ import { FiChevronRight } from 'react-icons/fi';
 import '../../App.css';
 import { PhoneContext } from '../../PhoneContext';
 
-const image = '/user.png';
+const image = 'user.png';
 
 function Header() {
   const dropdownRef = useRef(null);

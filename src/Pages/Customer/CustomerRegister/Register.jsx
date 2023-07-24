@@ -5,11 +5,11 @@ import { toast } from "react-toastify";
 import { customerSchema, initialValues } from "../../../Component/CustomerSchema";
 import "../../Customer/CustomerRegister/Customerform.css"
 import { AddCustomer } from "../../../utils/apiCalls"
-const defaultadharfront = "/images/adhar.webp";
-const defaultadharback = "/images/adhar_back.jpg";
-const defaultpan = "/images/pan.webp";
-const defaultbill = "/images/bill.webp";
-const defaultImage = "/images/user.png";
+const defaultadharfront = "images/adhar.webp";
+const defaultadharback = "images/adhar_back.jpg";
+const defaultpan = "images/pan.webp";
+const defaultbill = "images/bill.webp";
+const defaultImage = "images/user.png";
 
 function CustomerRegister() {
     const [img, setImg] = useState(defaultImage);
