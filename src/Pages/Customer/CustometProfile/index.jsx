@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import "../../Customer/CustomerRegister/Customerform.css"
 import { FaUserEdit } from "react-icons/fa"
 import { AiFillEye } from "react-icons/ai";
-import { FiEdit } from "react-icons/fi";
 import { BsPhone } from "react-icons/bs";
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
@@ -350,14 +349,42 @@ function CustomerProfile() {
         setValues(customerData)
     }
 
-    // const handleEditPhone = (id) => {
-    //     let Phone = purchaseDetails.data.data.CustomerAllPurchase?.find((n) => {
-    //         return n?.id == id;
-    //     });
-    //     setIsEdit(true)
-    //     setPhoneDetails(Phone);
-    //     setnewPhoneFormModal(true);
-    // };
+    const handleDeletePhone = async (id) => {
+        Swal.fire({
+            title: "Are you sure to delete phone?",
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Delete",
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false
+        
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try{
+                    const response = await DeletePurchase(id);
+                    console.log(response)
+                    if (response.data?.success == true) {
+                        toast.success(response.data?.message);
+                    }
+                }
+                catch(err){
+                    console.log(err)
+                    if(err instanceof AxiosError){
+                        toast.error(err.response.data.message)
+                    }
+                    else{
+                        toast.error('Failed to delete phone')
+                    }
+                }
+                finally {
+                    Swal.hideLoading(); 
+                }
+            }
+        });
+    };
 
     React.useEffect(() => {
         if (CustomerDetail.data) {
@@ -704,7 +731,7 @@ function CustomerProfile() {
                                                                             ?
                                                                             values.pancard
                                                                             :
-                                                                            
+
                                                                             URL.createObjectURL(values.pancard)
                                                                         :
                                                                         values.pancard
@@ -926,6 +953,17 @@ function CustomerProfile() {
                                                                                     className="xs:text-base md:text-sm lg:text-[19px] hover:cursor-pointer "
                                                                                     onClick={() =>
                                                                                         navigate(`/Customer/EMI-History/${item.id}`)}
+                                                                                />
+                                                                            </div>
+                                                                        </Tippy>
+                                                                        <Tippy content="Phone Delete">
+                                                                            <div className="flex justify-center items-center">
+                                                                                <MdDelete
+                                                                                    className="xs:text-base md:text-sm lg:text-[19px] text-red-500 hover:cursor-pointer "
+                                                                                    onClick={(e) => {
+                                                                                        e.stopPropagation();
+                                                                                        handleDeletePhone(item.id)
+                                                                                    }}
                                                                                 />
                                                                             </div>
                                                                         </Tippy>
