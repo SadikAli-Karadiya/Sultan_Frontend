@@ -7,6 +7,7 @@ import "../../App.css"
 import { RiDashboardFill } from "react-icons/ri";
 import { FaWallet } from "react-icons/fa";
 import { FaWpforms } from "react-icons/fa";
+import { FaHeadset } from "react-icons/fa";
 
 const Sidebar = () => {
   const [isLoading, setIsloading] = React.useState(false)
@@ -125,6 +126,16 @@ const Sidebar = () => {
                     <div className="flex justify-center pl-3 items-center xl:justify-start py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
                       <FaWpforms className="text-lg" />
                       <h1 className="text-sm hidden xl:block">Report</h1>
+                    </div>
+                  </NavLink>
+                </li>
+                <li className="xs:px-5 my-3">
+                  <NavLink
+                    activeclassname="active"
+                    to="/HelpLine">
+                    <div className="flex justify-center pl-3 items-center xl:justify-start py-2 xs:px-3 rounded-md space-x-2  hover:bg-[#5d88ff] hover:text-white ">
+                      <FaHeadset className="text-lg" />
+                      <h1 className="text-sm hidden xl:block">Help</h1>
                     </div>
                   </NavLink>
                 </li>

@@ -964,6 +964,7 @@ function CustomerProfile() {
                                                                                         handleDeletePhone(item.id)
                                                                                     }}
                                                                                 />
+                                                                                ye to hai me to model delete vaala dekh raha tha konse model me sir achaa smj gaya nahi sir mene ye delete wala kia hai
                                                                             </div>
                                                                         </Tippy>
                                                                     </td>
