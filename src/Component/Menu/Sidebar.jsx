@@ -29,12 +29,6 @@ const Sidebar = () => {
         <div className="h-full bg-white sticky left-0 top-0">
           <div className="sidebar h-screen xs:w-20 w-20 xl:w-56 bg-white drop-shadow-md">
             <div className="sidebar-top flex justify-center pt-3 px-2">
-              {/* <img
-                src="/images/logo.png"
-                alt=""
-                className="w-2/3 cursor-pointer hidden xl:block"
-                id="logo"
-              /> */}
               <h2 className="text-base xl:text-xl text-[#2908C7] font-bold">SULTAN MOBILE</h2>
             </div>
             <div className="mt-9 px-5">
