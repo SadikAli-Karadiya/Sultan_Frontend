@@ -63,7 +63,7 @@ function Login() {
                                 className=" w-28 lg:w-36"
                                 id="logo"
                             /> */}
-                            <h2 className="text:xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold">SULTAN MOBILE</h2>
+                            <h2 className="text:xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold font-moirai">SULTAN MOBILE</h2>
                         </div>
                         <section className="py-20 px-14 mt-16 xl::ml-20 flex justify-center items-center xl::w-2/3">
                             <div className="login ">
