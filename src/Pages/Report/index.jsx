@@ -1,97 +1,36 @@
-import { React, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useRef, useEffect } from "react";
+import ReactToPrint from "react-to-print";
+import { MdLocalPrintshop } from "react-icons/md";
 import { AiFillEye } from "react-icons/ai";
-import { IoMdInformationCircle } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
 import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css';
-import { useQuery } from 'react-query'
-import { getallTransection } from '../../utils/apiCalls';
+import ReportChart from "../../Component/ReportChart";
+import { NavLink } from "react-router-dom";
+import { useQuery } from "react-query";
+import { getReport, getMonthWiseReport } from "../../utils/apiCalls";
+import { useState } from "react";
+import { IoMdInformationCircle } from "react-icons/io";
+import Pagination from 'react-responsive-pagination'
+import '../../Component/Pagination/pagination.css'
+import exportFromJSON from "export-from-json";
 
-function Report() {
-  const navigate = useNavigate();
-  const [pageNo, setPageNo] = useState(1);
+const Report = () => {
+
   const [data, setData] = useState([]);
   const [date, setDate] = useState(() => {
     new Date()?.toISOString().slice(0, 10).split("-").reverse().join("-");
   });
-  const [transaction, setTransaction] = useState("?");
   const [nextDate, setNextDate] = useState("");
-  const reportData = useQuery(['transection'], () => getallTransection(pageNo - 1))
+  const reportData = useQuery(["Reports"], getReport);
 
-  const noOfTransaction = [
-    {
-      id: 1,
-      months: "januaray",
-      transection: 58,
-      total: 2580
-    },
-    {
-      id: 2,
-      months: "February",
-      transection: 58,
-      total: 2580
-    },
-    {
-      id: 3,
-      months: "march",
-      transection: 58,
-      total: 2580
-    },
-    {
-      id: 4,
-      months: "april",
-      transection: 58,
-      total: 2580
-    },
-    {
-      id: 5,
-      months: "may",
-      transection: 58,
-      total: 2580
-    },
-    {
-      id: 6,
-      months: "jun",
-      transection: 58,
-      total: 2580
-    },
-    {
-      id: 7,
-      months: "july",
-      transection: 58,
-      total: 2580
-    },
-    {
-      id: 8,
-      months: "august",
-      transection: 58,
-      total: 2580
-    },
-    {
-      id: 9,
-      months: "september",
-      transection: 58,
-      total: 2580
-    },
-    {
-      id: 10,
-      months: "october",
-      transection: 58,
-      total: 2580
-    },
-    {
-      id: 11,
-      months: "november",
-      transection: 58,
-      total: 2580
-    },
-    {
-      id: 12,
-      months: "december",
-      transection: 58,
-      total: 2580
-    },
-  ]
+  const componentRef = useRef();
+  const [isPrint, setIsPrint] = useState(false);
+  const [currentItems, setcurrentItems] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+  const [pageNo, setPageNo] = useState(1);
+  const [transaction, setTransaction] = useState("?");
+  const itemsPerPage = 10;
 
   function handleDataFilter(filterDate) {
     const preDate = new Date(`${filterDate},23:59:00`);
@@ -103,14 +42,13 @@ function Report() {
   }
 
   function handle_data(e) {
-
     const [previous, post] = handleDataFilter(e.target.value);
     setDate(e.target.value);
 
     if (nextDate) {
       handleNextDate(nextDate);
     } else {
-      const newData = reportData?.data?.data?.AllTransaction.filter(
+      const newData = reportData.data.data.data.filter(
         (recipet) =>
           new Date(recipet.date).getTime() > previous &&
           new Date(recipet.date).getTime() < post
@@ -126,181 +64,320 @@ function Report() {
 
     setNextDate(() => e);
 
-    const newData = reportData.data.data.filter(
-      (recipet) =>
-        new Date(recipet.date).getTime() > dateData[0] &&
-        new Date(recipet.date).getTime() < post
+    const newData = reportData.data.data.data.filter(
+      (item) =>
+        new Date(item.createdAt).getTime() > dateData[0] &&
+        new Date(item.createdAt).getTime() < post
     );
     setData(() => newData.reverse());
     setTransaction("?");
   }
 
+  function handleExportClick() {
+    let filterData = [];
+    filterData = data.map((m) => {
+      return {
+        recipt_id: m.receipt_id,
+        date: new Date(m.createdAt)
+          ?.toISOString()
+          .slice(0, 10)
+          .split("-")
+          .reverse()
+          .join("-"),
+        name: 'sadik',
+        amount: m.transaction?.amount,
+        // discount: m.discount,
+        admin: 'shad',
+      };
+    });
+
+    const fileName = date ? `SultanMobileReport${date}` : "SultanMobile";
+    const exportType = exportFromJSON.types.csv;
+    exportFromJSON({ data: filterData, fileName, exportType });
+  }
+
+  React.useEffect(() => {
+    setData(() => reportData?.data?.data.data);
+  }, [reportData.isSuccess]);
+
+
+  // -------------------------------
+  // -------- Pagination -----------
+  // -------------------------------
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setcurrentItems(data?.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(data?.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, data]);
+
   function calcaulateTotal() {
     let total = 0;
     data?.map((d) => {
-      total += d.transaction[0].amount;
+      total += d.transaction?.amount + d.extra_charge;
     });
 
     setTransaction(total);
     return total;
   }
 
-  return (
-    <>
-      <div className='px-5 py-5'>
-        <h1 className="mx-4 my-2 font-semibold"> EMI Calendar</h1>
-        <div className="flex justify-center items-center w-full">
-          <div className="flex flex-wrap justify-center gap-5 pt-5 w-4/5 items-center">
-            {noOfTransaction?.map((data, i) => {
-              return (
-                <div key={i} className="rounded-xl shadow-2xl bg-white w-32 ">
-                  <h1 className=" text-sm py-1 font-semibold bg-green-300 rounded-t-xl text-center">
-                    {data.months}
-                  </h1>
-                  <span className="text-xs m-2 ">Transactions : {data.transection}</span>
-                  <h2 className=" text-xs m-2">
-                    Total :
-                    <span className="ml-1 font-bold">
-                      {data.total}
-                    </span>
-                  </h2>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className='px-5 py-5 xl:px-10 bg-white drop-shadow-md mt-10 '>
-          <h1 className='font-bold px-5 pt-4 text-lg'>Transactions List</h1>
-          <div className='px-6 py-7 flex xs:flex-col xs:space-y-10 lg:flex-row lg:justify-between lg:items-center'>
-            <form action="" className='flex xs:flex-col xs:space-x-0 xs:space-y-3 sm:flex-row sm:space-y-0 sm:items-center sm:space-x-3 '>
-              <div className='flex flex-col'>
-                <label htmlFor="From" className='text-sm text-slate-400'>From</label>
-                <input
-                  type="date"
-                  name=""
-                  id=""
-                  value={date}
-                  onChange={(e) => handle_data(e)}
-                  className='border py-2 rounded-md px-2 hover:cursor-pointer outline-none' />
-              </div>
-              <div className='flex flex-col'>
-                <label htmlFor="From" className='text-sm text-slate-400'>To</label>
-                <input type="date"
-                  name=""
-                  id=""
-                  value={nextDate}
-                  onChange={(e) => handleNextDate(e.target.value)}
-                  disabled={date ? false : true}
-                  className='border py-2 rounded-md px-2 hover:cursor-pointer outline-none' />
-              </div>
-              <div className='flex sm:pt-5 '>
-                <button
+  const handlePageClick = (page) => {
+    const newOffset = (page * itemsPerPage) % data.length;
+    setPageNo(page + 1);
+    setItemOffset(newOffset);
+  };
 
-                  onClick={(e) => {
-                    setData(reportData?.data?.data?.AllTransaction);
-                    setDate("");
-                    setNextDate("");
-                  }} className=' py-[10px] text-sm rounded-md px-4 border shadow-lg hover:bg-blue-100 font-semibold'>
-                  Clear Filter
-                </button>
-              </div>
-            </form>
-            <div className='flex items-center space-x-3'>
-              <div className='bg-green-200 rounded-md px-3 shadow-lg py-1 flex flex-col justify-center  items-center'>
-                <h1 className='font-semibold text-sm'>
-                  Total : {transaction}
-                </h1>
-                <p className='text-sm italic'>Transection : {transaction === "?" ? "?" : ' ' + data?.length}</p>
-              </div>
-              <div className='flex justify-end items-end'>
+  return (
+    <div>
+      <div className="mt-4">
+        <ReportChart/>
+      </div>
+      <div className="flex justify-center items-center p-10 pt-10">
+        <div className=" relative  sm:rounded-lg bg-white p-10 shadow-xl space-y-5 w-full">
+          <div>
+            <p className="text-base md:text-lg lg:text-xl font-bold leading-tight text-gray-800">
+              Transactions List
+            </p>
+          </div>
+          <div className="print-btn flex items-end space-x-3">
+            <div className="flex flex-col">
+              <label htmlFor="" className="text-gray-400">From</label>
+              <input
+                id=""
+                value={date}
+                type="Date"
+                onChange={(e) => handle_data(e)}
+                className="outline-none bg-white border rounded-md p-2 cursor-pointer"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label htmlFor="" className="text-gray-400">To</label>
+              <input
+                id=""
+                value={nextDate}
+                type="Date"
+                onChange={(e) => handleNextDate(e.target.value)}
+                disabled={date ? false : true}
+                className="outline-none bg-white border rounded-md p-2 cursor-pointer"
+              />
+            </div>
+            <button
+              id=""
+              className=" flex items-center border outline-none bg-white py-2 px-4 xl:p-4 xl:py-2 shadow-lg hover:bg-blue-100 rounded-md  space-x-1 "
+              onClick={(e) => {
+                setData(reportData?.data?.data.data);
+                setDate("");
+                setNextDate("");
+              }}
+            >
+              Clear Filter
+            </button>
+            {currentItems?.length > 0 ? (
+              <>
+                <Tippy content="Print">
+                  <span
+                    href="#"
+                    className="text-3xl bg-green-200 rounded-md text-green-900  w-10 h-8 flex justify-center  cursor-pointer mb-1"
+                  >
+                    <ReactToPrint
+                      trigger={() => <MdLocalPrintshop />}
+                      content={() => componentRef.current}
+                      onBeforeGetContent={() => {
+                        return new Promise((resolve) => {
+                          setIsPrint(true);
+                          resolve();
+                        });
+                      }}
+                      onAfterPrint={() => setIsPrint(false)}
+                    />
+                  </span>
+                </Tippy>
                 <button
-                  onClick={calcaulateTotal}
-                  className=' py-[10px] text-sm rounded-md px-4 border shadow-lg hover:bg-blue-100 font-semibold'>
-                  Calculate Total
+                  id=""
+                  className=" flex items-center border outline-none bg-gray-400 hover:bg-gray-300 px-4 xl:px-4 xl:py-1 shadow-lg rounded-md  space-x-1  mb-1"
+                  onClick={handleExportClick}
+                >
+                  Export
                 </button>
+              </>
+            ) : null}
+            <div className="flex w-2/5  items-center justify-end ">
+              <div className="flex flex-col items-center py-1 px-3 rounded-md text-sm mx-2 shadow-xl justify-end bg-green-200">
+                <span className="font-semibold"> Total : {transaction} </span>
+                <span className="italic">
+                  Transactions :{transaction === "?" ? "?" : ' '+data?.length}
+                </span>
               </div>
+              <button
+                onClick={calcaulateTotal}
+                className=" flex items-center border outline-none bg-white py-2 px-4 xl:p-4 xl:py-2 shadow-lg hover:bg-blue-100 rounded-md  space-x-1 "
+              >
+                Calculate Total
+              </button>
             </div>
           </div>
-          {/* <div className="xs:overflow-x-scroll xl:overflow-x-hidden">
-            {
-              Receipt?.data?.data?.AllTransaction?.length > 0 ? <table className="w-full whitespace-nowrap">
+          <div className="p-5 pt-3 pb-0">
+            <div className="">
+              <table ref={componentRef} className="w-full whitespace-nowrap">
                 <thead>
-                  <tr className="bg-gray-100 h-16 w-full text-sm leading-none text-[#0d0d48]">
+                  <tr className="bg-gray-100 h-16 w-full text-sm leading-none font-bold text-darkblue-500">
                     <th className="font-normal text-left pl-10">Date</th>
                     <th className="font-normal text-left  px-2 xl:px-0">
                       Reciept No
                     </th>
                     <th className="font-normal text-left px-2 xl:px-0">
-                      Student Name
-                    </th>
-                    <th className="font-normal text-left px-2 xl:px-0">
-                      Class
-                    </th>
-                    <th className="font-normal text-left  px-2 xl:px-0">
-                      Installment
+                      Customer Name
                     </th>
                     <th className="font-normal text-left px-2 xl:px-0">
                       Amount
                     </th>
                     <th className="font-normal text-left px-2 xl:px-0">
+                      Extra Charge
+                    </th>
+                    <th className="font-normal text-left px-2 xl:px-0">
                       Admin
                     </th>
-                    <th className="font-normal text-center px-2 xl:px-0">
-                      Detail
-                    </th>
+                    {!isPrint ? (
+                      <th className="font-normal text-left px-2 xl:px-0">
+                        Detail
+                      </th>
+                    ) : null}
                   </tr>
                 </thead>
                 <tbody className="w-full">
-                  <tr
-                    className="h-20 text-sm leading-none text-gray-800 border-b border-gray-100"
-                  >
-                    <td className="pl-8">
-                      02 / 05 / 2023
-                    </td>
-                    <td className=" px-2 font-bold xl:px-0">
-                      002
-                    </td>
-                    <td className="px-2 xl:px-0 capitalize">
-                      Shad
-                    </td>
-                    <td className="px-2 xl:px-0 capitalize">
-                      Vivo F17 Pro
-                    </td>
-                    <td className=" px-2 xl:px-0">
-                      002
-                    </td>
-                    <td>
-                      <span className="bg-blue-200 px-4 text-darkblue-500 font-bold rounded">
-                        1500
-                      </span>
-                    </td>
-                    <td>
-                      <span className="capitalize">Israil</span>
-                    </td>
-                    <td className="px-5">
-                      <span className='flex justify-center items-center '>
-                        <Tippy content="Show Reciept">
-                          <div onClick={() =>
-                            navigate(`/Receipt/Receipt`)}>
-                            <AiFillEye className="text-xl cursor-pointer" />
-                          </div>
-                        </Tippy>
-                      </span>
-                    </td>
-                  </tr>
+                  {reportData.isLoading ? (
+                    <tr className="h-20 blur-sm text-sm leading-none text-gray-800 border-b border-gray-100">
+                      <td className="pl-8">.........</td>
+                      <td className=" px-2 font-bold xl:px-0">..</td>
+                      <td className="px-2 xl:px-0">.....</td>
+                      <td className="font-medium px-2 xl:px-0">
+                        <span className="bg-green-200 px-4 text-green-900 font-bold rounded">
+                          ...
+                        </span>
+                      </td>
+                      <td>
+                        <span className="bg-blue-200 px-4 text-darkblue-500 font-bold rounded">
+                          ...
+                        </span>
+                      </td>
+                      <td>
+                        <span>.......</span>
+                      </td>
+                      <td className="px-5  ">
+                        <span>........</span>
+                      </td>
+                    </tr>
+                  ) : isPrint ? (
+                    data?.map((m, key) => {
+                      return (
+                        <tr
+                          key={key}
+                          className="h-20 text-sm leading-none text-gray-800 border-b border-gray-100"
+                        >
+                          <td className="pl-8">
+                            {new Date(m.createdAt)
+                              ?.toISOString()
+                              .slice(0, 10)
+                              .split("-")
+                              .reverse()
+                              .join("-")}
+                          </td>
+                          <td className=" px-2 font-bold xl:px-0">
+                            {m.receipt_id}
+                          </td>
+                          <td className="px-2 xl:px-0 capitalize">
+                            {
+                              m.emi.purchase.customer.full_name
+                            }
+                          </td>
+                          <td>
+                            <span className="bg-blue-200 px-4 text-darkblue-500 font-bold rounded">
+                              {m.transaction?.amount}
+                            </span>
+                          </td>
+                          <td>
+                            <span className="bg-red-200 px-4 text-darkblue-500 font-bold rounded">
+                              {m.extra_charge}
+                            </span>
+                          </td>
+                          <td>
+                            <span className="capitalize">{m.admin.user.username}</span>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    currentItems?.map((m, key) => {
+                      return (
+                        <tr
+                          key={key}
+                          className="h-20 text-sm leading-none text-gray-800 border-b border-gray-100"
+                        >
+                          <td className="pl-8">
+                            {new Date(m.createdAt)
+                              ?.toISOString()
+                              .slice(0, 10)
+                              .split("-")
+                              .reverse()
+                              .join("-")}
+                          </td>
+                          <td className=" px-2 font-bold xl:px-0">
+                            {m.receipt_id}
+                          </td>
+                          <td className="px-2 xl:px-0 capitalize">
+                            {
+                              m.emi.purchase.customer.full_name
+                            }
+                          </td>
+                          <td>
+                            <span className="bg-blue-200 px-4 text-darkblue-500 font-bold rounded">
+                              {m.transaction?.amount}
+                            </span>
+                          </td>
+                          <td>
+                            <span className="bg-red-200 px-4 text-darkblue-500 font-bold rounded">
+                              {m.extra_charge}
+                            </span>
+                          </td>
+                          <td>
+                            <span className="capitalize">{m.admin.user.username}</span>
+                          </td>
+                          <td className="px-5  ">
+                            <span>
+                              <NavLink
+                                to={`/receipt/receipt/${m.id}`}
+                              >
+                                <AiFillEye className="text-xl cursor-pointer" />
+                              </NavLink>
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
                 </tbody>
               </table>
-                :
-                <div className='flex w-full justify-center items-center py-[7px]  rounded-md space-x-4 bg-red-200'>
-                  <IoMdInformationCircle className='text-xl text-red-600' />
-                  <h1 className='text-sm font-bold text-red-800'>No Transection </h1>
+              {currentItems?.length < 1 ? (
+                <div className="bg-red-200 font-bold justify-center items-center p-2 rounded  flex space-x-2">
+                  <IoMdInformationCircle className="text-xl text-red-600" />
+                  <h1 className="text-red-800"> Transaction not found </h1>
                 </div>
-            }
-          </div> */}
+              ) : null}
+            </div>
+          </div>
+          {currentItems?.length > 0 ? (
+            <div className=" flex justify-center items-center py-2">
+              <Pagination
+                  total={pageCount}
+                  current={pageNo}
+                  onPageChange={handlePageClick}
+              />
+            </div>
+          ) : null}
         </div>
       </div>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default Report
+export default Report;

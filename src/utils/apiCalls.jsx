@@ -458,3 +458,18 @@ export const deleteSpecification = (id) => {
     'url': `/specification/Delete/${id}`,
   })
 }
+
+//----------------REPORT--------
+export const getReport = () => {
+  return instance({
+    'method': 'GET',
+    'url': `/report`,
+  })
+}
+
+export const getMonthWiseReport = () => {
+  return instance({
+    'method': 'GET',
+    'url': `/report/month`,
+  })
+}

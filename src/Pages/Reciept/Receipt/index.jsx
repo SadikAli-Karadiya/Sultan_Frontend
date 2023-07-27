@@ -91,8 +91,8 @@ function Receipt() {
                         <div className="px-7 flex items-center justify-between">
                             <div className="flex items-center ">
                                 <div className="logo">
-                                    <h2 className="text-xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold">SULTAN </h2>
-                                    <h2 className="text-xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold">MOBILE </h2>
+                                    <h2 className="text-xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold font-moirai">SULTAN </h2>
+                                    <h2 className="text-xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold font-moirai">MOBILE </h2>
                                 </div>
                                 <div className="address pl-20">
                                     <span>Phone : +91 7600199352</span>

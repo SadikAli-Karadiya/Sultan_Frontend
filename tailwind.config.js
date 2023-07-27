@@ -60,6 +60,9 @@ module.exports = {
           200: "#f3797e",
         },
       },
+       fontFamily: {
+         moirai: ['Moirai One', 'cursive'],
+      },
     },
   },
   plugins: [
