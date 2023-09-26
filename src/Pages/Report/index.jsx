@@ -77,17 +77,17 @@ const Report = () => {
     let filterData = [];
     filterData = data.map((m) => {
       return {
-        recipt_id: m.receipt_id,
+        recipt_no: m.receipt_id,
         date: new Date(m.createdAt)
           ?.toISOString()
           .slice(0, 10)
           .split("-")
           .reverse()
           .join("-"),
-        name: 'sadik',
+        name:  m.emi.purchase.customer.full_name,
+        extra_charge: m.extra_charge,
         amount: m.transaction?.amount,
-        // discount: m.discount,
-        admin: 'shad',
+        admin: m.admin.user.username,
       };
     });
 
