@@ -19,7 +19,7 @@ function EMIHistory() {
     const [EMI_Details, setEMIDetails] = useState();
     const [emiId, setEmiId] = useState(null)
     const data = useQuery(['emi', params.id], () => getEmiPurchasebyId(params.id));
-
+    // console.log(data.data.data.AllEmi)
     const handlePayEMI = (id) => {
         navigate(`/receipt/Generate/${id}`,
             {
@@ -29,16 +29,16 @@ function EMIHistory() {
             })
     };
 
-    useEffect(()=>{
-        if(data.data){
-            for(let i=0; i<data.data.data.AllEmi.length; i++){
-                if(data.data.data.AllEmi[i].status == 'pending'){
+    useEffect(() => {
+        if (data.data) {
+            for (let i = 0; i < data.data.data.AllEmi.length; i++) {
+                if (data.data.data.AllEmi[i].status == 'pending') {
                     setEmiId(data.data.data.AllEmi[i].id)
                     break;
                 }
             }
         }
-    },[data.isSuccess, data.data])
+    }, [data.isSuccess, data.data])
 
 
     return (
@@ -51,16 +51,73 @@ function EMIHistory() {
                         <span className=" text-xl text-[#0d0d48] font-semibold group-hover:text-blue-700">Back</span>
                     </div>
                 </div>
+                <div className='px-20'>
+                    <div className="flex flex-col bg-white shadow-md rounded-md px-10   mb-10 py-5 justify-center items-center w-full xl:gap-1">
+                        <div className="flex items-center xs:flex-col xs:gap-0 md:flex-row md:gap-4 xl:gap-4 w-full">
+                            <div className="date w-full">
+                                <label className="block">
+                                    <span className="block text-sm font-medium text-black">
+                                        Date
+                                    </span>
+                                    <div className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'>
+                                        {moment(data?.data?.data?.AllEmi[0]?.createdAt).format("DD/MM/YYYY")}                                    </div>
+                                </label>
+                            </div>
+                            <div className="selectinst w-full">
+                                <label className="block">
+                                    <span className="block text-sm font-medium text-black">
+                                        Bill Number
+                                    </span>
+                                    <input
+                                        type="text"
+                                        value="10"
+                                        className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
+                                    />
+                                </label>
+                            </div>
+                            <div className="selectinst w-full">
+                                <label className="block">
+                                    <span className="block text-sm font-medium text-black">
+                                        Phone
+                                    </span>
+                                    <div className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'>
+                                        {data?.data?.data?.AllEmi[0]?.purchase?.specification?.phone?.model_name} ( {data?.data?.data?.AllEmi[0]?.purchase?.specification?.ram} X {data?.data?.data?.AllEmi[0]?.purchase?.specification?.storage} )
+                                    </div>
+                                </label>
+                            </div>
+                            <div className="date w-full">
+                                <label className="block">
+                                    <span className="block text-sm font-medium text-black">
+                                        IEMI No
+                                    </span>
+                                    <div className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'>
+                                        {data?.data?.data?.AllEmi[0]?.purchase?.iemi}
+                                    </div>
+                                </label>
+                            </div>
+                            <div className="date w-full">
+                                <label className="block">
+                                    <span className="block text-sm font-medium text-black">
+                                        Total Amount
+                                    </span>
+                                    <div className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'>
+                                        {data?.data?.data?.AllEmi[0]?.purchase?.net_amount}
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {
                     data?.isLoading == true ?
                         <LoaderSmall />
                         :
                         (
                             data?.data?.data?.AllEmi?.length > 0 ?
-                                <div className='xs:px-0 xs:py-5 xl:px-20'>
+                                <div className='xs:px-0 xs:py-5 xl:px-20 mb-10'>
                                     <div className="bg-white xs:overflow-x-scroll xl:overflow-x-hidden">
                                         <table className="w-full bg-[#0d0d48] text-sm text-center  " id="table-to-xls" >
-                                            <thead className="text-xs text-gray-700 bg-class3-50 uppercase  ">
+                                            <thead className="text-xs text-gray-700 bg-[#0d0d48] uppercase  ">
                                                 <tr className="text-white text-xs ">
                                                     <th scope="col" className="pl-3 py-4">
                                                         Receipt No
@@ -97,9 +154,9 @@ function EMIHistory() {
                                                                 <th className="py-5 px-6">
                                                                     {
                                                                         item.status == "pending"
-                                                                        ?
+                                                                            ?
                                                                             '--'
-                                                                        :
+                                                                            :
                                                                             item?.receipt?.receipt_id
                                                                     }
                                                                 </th>
@@ -122,8 +179,8 @@ function EMIHistory() {
                                                                 </td>
                                                                 <td className="px-6 py-5">
                                                                     {item.status == "pending"
-                                                                    ? '--'
-                                                                    : item?.receipt?.extra_charge}
+                                                                        ? '--'
+                                                                        : item?.receipt?.extra_charge}
                                                                 </td>
                                                                 <td className="px-6 py-5">
                                                                     {

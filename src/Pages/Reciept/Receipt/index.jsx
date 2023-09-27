@@ -4,7 +4,7 @@ import { MdModeEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { getReceiptbyReceiptId, deleteReceiptById } from '../../../utils/apiCalls';
 import { useQuery, useMutation } from 'react-query'
 import moment from 'moment'
@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 function Receipt() {
     const params = useParams();
+    const location = useLocation()
     const navigate = useNavigate();
     const printRef = useRef();
     const [print, setPrint] = useState(false);
@@ -79,35 +80,36 @@ function Receipt() {
             <div className=' sm:px-5 xl:px-10 h-full'>
                 <div className=' py-5 px-5 flex justify-between'>
                     <h1 className='text-[#0d0d48] text-2xl font-bold'>Receipt</h1>
-                    <div className="group h-9 w-20 flex justify-center items-center gap-1 cursor-pointer" id="" onClick={() => {
-                        navigate(-1)
-                    }}>
-                        <IoIosArrowBack className="text-2xl font-bold group-hover:text-blue-700 text-darkblue-500 mt-[3px]" />
-                        <span className=" text-xl text-darkblue-500 font-semibold group-hover:text-blue-700">Back</span>
-                    </div>
+                    {
+                        location?.state?.prevPath != "update_receipt"
+                            ?
+                            <div className="group h-9 w-20 flex justify-center items-center gap-1 cursor-pointer" id="" onClick={() => {
+                                navigate(-1)
+                            }}>
+                                <IoIosArrowBack className="text-2xl font-bold group-hover:text-blue-700 text-darkblue-500 mt-[3px]" />
+                                <span className=" text-xl text-darkblue-500 font-semibold group-hover:text-blue-700">Back</span>
+                            </div>
+                            :
+                            null
+                    }
                 </div>
                 <div className="flex justify-center items-center px-5">
-                    <div ref={printRef} className="m-3 py-7 bg-white w-[790px] border h-[550px] shadow-xl rounded-md ">
-                        <div className="px-7 flex items-center justify-between">
-                            <div className="flex items-center ">
-                                <div className="logo">
-                                    <h2 className="text-xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold">SULTAN </h2>
-                                    <h2 className="text-xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold">MOBILE </h2>
+                    <div ref={printRef} className="m-3  bg-white w-[790px] border h-[500px] shadow-xl rounded-md ">
+                        <div className=" h-28 w-full flex flex-col justify-between">
+                            <div className="flex items-center w-full justify-between  mt-2 pr-5">
+                                <div className=" w-full flex justify-start items-center ml-5">
+                                    <img src="/logo.jpg" alt="" className='w-[40%]' />
                                 </div>
-                                <div className="address pl-20">
-                                    <span>Phone : +91 7600199352</span>
-                                    <p>Ajit Mill Char Rasta</p>
-                                    <p>Rakhial Road Ahmedabad</p>
+                                <div className="w-full flex justify-end items-center ">
+                                    <h1 className="text-darkblue-500  text-2xl font-bold">Receipt No : </h1>
+                                    <span className="text-darkblue-500 font-bold text-2xl px-3 py-1 rounded-md">{data?.data?.data?.SingleTransaction?.receipt?.receipt_id}</span>
                                 </div>
                             </div>
-                            <div className="flex items-center">
-                                <h1 className="text-2xl">Receipt No : </h1>
-                                <div className="bg-slate-200 py-[10px] px-9 rounded-full ml-4">
-                                    <span className="text-2xl text-gray-600 font-bold">{data?.data?.data?.SingleTransaction?.receipt?.receipt_id}</span>
-                                </div>
+                            <div className=" w-full bg-darkblue-500 flex justify-center items-center py-1 ">
+                                <p className="text-xs text-white">ARCHANA IND . ESTATE, 10/C/23, Ajit Mill Cir, nr. NILKHANTH RESTURANT, Rakhial, Ahmedabad, Gujarat 380023</p>
                             </div>
                         </div>
-                        <div className="flex justify-between w-full px-7 pt-4 space-x-5">
+                        <div className="flex justify-between w-full px-7 pt-2 space-x-5">
                             <div className="flex items-center w-[65%] py-5">
                                 <h1 className=" font-semibold w-[230px]">Customer Name <span className="ml-5">:</span></h1>
                                 <div className="text-xl w-full border-dotted border-b-2 border-slate-300">
@@ -125,139 +127,108 @@ function Receipt() {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex justify-between w-full px-7 ">
-                            <div className="flex items-center w-full">
-                                <h1 className=" font-semibold w-[200px]">Amount <span className="ml-[80px] ">:  </span> </h1>
-                                <div className="text-xl w-full border-dotted border-b-2 border-slate-300">
-                                    <span className="uppercase font-semibold text-[16px]  ">{amountInWords}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="bg-slate-200 mx-16 rounded-full items-center px-6 py-2 h-12 flex  ml-48 mt-5">
-                            <BiRupee className="text-3xl mt-1" />
-                            <h1 className="font-bold ml-3 text-3xl">
-                                {data?.data?.data?.SingleTransaction?.amount}
-                                /-</h1>
-                        </div>
-                        <div className="flex justify-between w-full px-7 space-x-8">
-                            <div className="flex items-center w-[50%] py-5">
-                                <h1 className=" font-semibold w-[230px]">Extra Charge <span className="ml-5">:</span></h1>
-                                <div className="text-xl w-full border-dotted border-b-2 border-slate-300">
-                                    <span className=" uppercase font-semibold text-[16px] space-x-2">
-                                        <span>{data?.data?.data?.SingleTransaction?.receipt?.extra_charge}</span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="flex items-center w-[50%]">
-                                <h1 className=" font-semibold w-[200px]">
-                                    Payment For
-                                    <span className="ml-3 "> :</span>
-                                </h1>
-                                <div className="text-xl w-full border-dotted border-b-2 border-slate-300">
-                                    <span className="uppercase font-semibold text-[16px]  ">
-                                        {data?.data?.data?.emiCount}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="px-7">
-                            <div className="flex justify-between w-full">
-                                <div className="flex items-center">
-                                    <h1 className=" font-semibold">Model </h1>
-                                    <span className="pl-1 text-lg">:</span>
-                                    <div className="ml-2 flex items-center space-x-2 font-semibold rounded-md text-slate-600">
-                                        <h1>
-                                            {`${data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.phone.company.company_name} 
+                        <div className="flex justify-between w-full px-7 pt-2 space-x-5">
+                            <div className="flex items-center w-[55%] ">
+                                <h1 className=" font-semibold">Model </h1>
+                                <div className="ml-24 w-full flex items-center space-x-2 font-semibold rounded-md border-dotted border-b-2 border-slate-300">
+                                    <span className=" text-lg">:</span>
+                                    <h1>
+                                        {`${data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.phone.company.company_name} 
                                             ${data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.phone.model_name}`}
-                                        </h1>
-                                        <span>( {data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.ram} x {data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.storage} )</span>
+                                    </h1>
+                                    <span>( {data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.ram} x {data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.storage} )</span>
+                                </div>
+                            </div>
+                            <div className="px-7">
+                                <div className="flex justify-between w-full">
+
+                                    <div className="flex items-center">
+                                        <h1 className=" font-semibold">Installment Type </h1>
+                                        <span className="pl-1 text-lg">:</span>
+                                        <div className="ml-2 font-semibold rounded-md ">
+                                            <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.installment.month} Months</h1>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="flex items-center">
-                                    <h1 className=" font-semibold">Installment Type </h1>
-                                    <span className="pl-1 text-lg">:</span>
-                                    <div className="ml-2 font-semibold rounded-md text-slate-600">
-                                        <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.installment.month} Months</h1>
-                                    </div>
-                                </div>
-                                {/* <div className="w-64 flex items-center">
-                                    <h1 className=" font-semibold">RAM </h1>
-                                    <span className="pl-1 text-lg">:</span>
-                                    <div className="ml-2 font-semibold rounded-md text-slate-600">
-                                        <h1>
-                                            {data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.ram}
-                                        </h1>
-                                    </div>
-                                </div>
-                                <div className="w-64 flex items-center">
-                                    <h1 className=" font-semibold">Storage </h1>
-                                    <span className="pl-1 text-lg">:</span>
-                                    <div className="ml-2 font-semibold rounded-md text-slate-600">
-                                        <h1>
-                                            {data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.specification.storage}
-                                        </h1>
-                                    </div>
-                                </div> */}
                             </div>
                         </div>
                         <div className="px-7 pt-5">
-                            <div className="flex justify-between space-y-1">
-                                <div className="flex items-center">
+                            <div className="flex justify-between space-y-1 w-full space-x-5">
+                                <div className="flex items-center w-full">
                                     <h1 className=" font-semibold">Total Amount </h1>
                                     <span className="pl-1 text-lg">:</span>
-                                    <div className="ml-2 font-semibold rounded-md text-slate-600">
+                                    <div className="ml-2 w-1/2 font-semibold rounded-md border-2  px-2 border-slate-200">
                                         <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.net_amount}</h1>
                                     </div>
                                 </div>
-                                <div className="flex items-center ">
-                                    <h1 className=" font-semibold">Paid Amount </h1>
+                                <div className="flex items-center w-full ">
+                                    <h1 className=" font-semibold">PaidUp </h1>
                                     <span className="pl-1 text-lg">:</span>
-                                    <div className="ml-2 font-semibold  rounded-md text-slate-600 ">
+                                    <div className="ml-2 w-1/2 font-semibold  rounded-md border-2 px-2  border-slate2300">
                                         <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.net_amount - data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.pending_amount}</h1>
                                     </div>
                                 </div>
-                                <div className="flex items-center">
-                                    <h1 className=" font-semibold">Pending Amount </h1>
+                                <div className="flex items-center w-full">
+                                    <h1 className=" font-semibold">Pending </h1>
                                     <span className="pl-1 text-lg">:</span>
-                                    <div className="ml-2 font-semibold rounded-md text-slate-600 ">
+                                    <div className="ml-2 w-1/2 font-semibold rounded-md border-2 px-2  border-slate2300 ">
                                         <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.pending_amount}</h1>
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex mt-14 justify-between">
-                                <div className="flex items-start text-slate-600">
-                                    <h1 className="font-semibold">Payment By</h1>
-                                    <div className="flex flex-col items-start ml-1">
-                                        <div className="font-semibold">
-                                            {
-                                                data?.data?.data?.SingleTransaction?.is_by_cash == true
-                                                    ?
-                                                    (<span>Cash</span>)
+                        </div>
+                        <div className="flex  w-full px-7 py-5 ">
+                            <div className="flex items-center w-full space-x-5 ">
+                                <h1 className=" font-semibold ">Amount </h1>
+                                <div className="bg-slate-200  rounded-full items-center w-1/2 py-2 px-3 flex ">
+                                    <BiRupee className="text-2xl mt-1 text-darkblue-500" />
+                                    <h1 className="font-bold text-darkblue-500 ml-3 text-2xl">
+                                        {data?.data?.data?.SingleTransaction?.amount}
+                                        /-</h1>
+                                </div>
+                            </div>
+                            <div className="flex items-center w-1/2">
+                                <h1 className=" font-semibold w-full ">
+                                    Payment For
+                                    <span className="ml-3 "> :</span>
+                                </h1>
+                                <div className="text-xl w-full border-dotted border-b-2 border-slate-300">
+                                    <span className=" font-semibold text-[16px]  ">
+                                        <span className="pr-3">Installment</span>{data?.data?.data?.emiCount}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex mt-20 px-7 justify-between">
+                            <div className="flex items-start ">
+                                <h1 className="font-semibold">Payment By</h1>
+                                <div className="flex flex-col items-start ml-1">
+                                    <div className="font-semibold">
+                                        {
+                                            data?.data?.data?.SingleTransaction?.is_by_cash == true
+                                                ?
+                                                (<span>Cash</span>)
+                                                :
+                                                data?.data?.data?.SingleTransaction?.is_by_upi == true ?
+                                                    <span>UPI ( {data?.data?.data?.SingleTransaction?.upi_no} ) </span>
                                                     :
-                                                    data?.data?.data?.SingleTransaction?.is_by_upi == true ?
-                                                        <span>UPI ( {data?.data?.data?.SingleTransaction?.upi_no} ) </span>
-                                                        :
-                                                        data?.data?.data?.SingleTransaction?.is_by_cheque == true
-                                                            ?
-                                                            <div className="flex">
-                                                                <span> Cheque </span>
-                                                                <div>
-                                                                    <span className="ml-2">( {data?.data?.data?.SingleTransaction?.cheque_no} )</span>
-                                                                    <span className="ml-2"> {moment(data?.data?.data?.SingleTransaction?.cheque_date).format("DD / MM / YYYY")}</span>
-                                                                </div>
+                                                    data?.data?.data?.SingleTransaction?.is_by_cheque == true
+                                                        ?
+                                                        <div className="flex">
+                                                            <span> Cheque </span>
+                                                            <div>
+                                                                <span className="ml-2">( {data?.data?.data?.SingleTransaction?.cheque_no} )</span>
+                                                                <span className="ml-2"> {moment(data?.data?.data?.SingleTransaction?.cheque_date).format("DD / MM / YYYY")}</span>
                                                             </div>
-                                                            :
-                                                            null
-                                            }
-                                        </div>
+                                                        </div>
+                                                        :
+                                                        null
+                                        }
                                     </div>
                                 </div>
-                                <div className="w-[20%]">
-                                    <div className="border-b-2">
-
-                                    </div>
-                                    <h1 className="font-semibold mt-2 text-end text-sm text-slate-500">Authorized Signature</h1>
-                                </div>
+                            </div>
+                            <div className="w-[20%]">
+                                <h1 className="font-semibold mt-2 text-end text-sm ">Authorized Signature</h1>
                             </div>
                         </div>
                     </div>

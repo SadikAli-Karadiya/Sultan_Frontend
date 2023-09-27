@@ -58,13 +58,12 @@ function Login() {
                     </div>
                     <div className="flex flex-1 flex-col justify-start mt-5">
                         <div className="flex  justify-end xl:justify-end items-end px-3 sm:pr-10">
-                            {/* <img
-                                src="images/logo.png"
+                            <img
+                                src="logo.jpg"
                                 alt=""
                                 className=" w-28 lg:w-36"
                                 id="logo"
-                            /> */}
-                            <h2 className="text:xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold">SULTAN MOBILE</h2>
+                            />
                         </div>
                         <section className="py-20 px-14 mt-8 xl::ml-20 flex justify-center items-center xl::w-2/3">
                             <div className="login ">

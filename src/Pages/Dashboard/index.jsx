@@ -82,7 +82,7 @@ function Dashboard() {
       <div className='grid grid-cols-4 my-10 gap-5 '>
         <div className='bg-[#5d88ff24] flex justify-between items-start py-5 px-3 rounded-md shadow-md '>
           <div className='flex flex-col space-y-4'>
-            <p className="text-[#5d87ff] text-lg font-semibold ">Total Customer</p>
+            <p className="text-[#5d87ff] text-lg font-semibold ">Total Pending Customer</p>
             <div className='flex items-center space-x-5'>
               <div className='bg-[#5d87ff] text-white px-2 py-2 text-3xl rounded-md'>
                 <FaUsers />
@@ -100,7 +100,7 @@ function Dashboard() {
         </div>
         <div className='bg-[#49bfff2c] flex justify-between items-start  py-5 px-3 rounded-md shadow-sm'>
           <div className='flex flex-col space-y-4 '>
-            <p className="text-[#49beff] text-lg font-semibold ">Total Model</p>
+            <p className="text-[#49beff] text-lg font-semibold ">Total Running Model</p>
             <div className='flex items-center space-x-5'>
               <div className='bg-[#49beff] text-white px-2 py-2 text-3xl rounded-md'>
                 <GiSmartphone />
@@ -133,7 +133,7 @@ function Dashboard() {
 
         <div className='bg-[#13deb930] flex justify-between items-start  py-5 px-3 rounded-md shadow-sm '>
           <div className='flex flex-col space-y-4 '>
-            <p className="text-[#13deb9] text-lg font-semibold ">Today's Collection</p>
+            <p className="text-[#13deb9] text-lg font-semibold ">Total Collection</p>
             <div className='flex items-center space-x-5'>
               <div className='bg-[#13deb9] text-white px-2 py-2 text-3xl rounded-md'>
                 <GiTakeMyMoney />

@@ -28,10 +28,15 @@ const Sidebar = () => {
       <div className="relative bg-[#f5f7ff] min-h-screen flex w-full">
         <div className="h-full bg-white sticky left-0 top-0">
           <div className="sidebar h-screen xs:w-20 w-20 xl:w-56 bg-white drop-shadow-md">
-            <div className="sidebar-top flex justify-center pt-3 px-2">
-              <h2 className="text-base xl:text-xl text-[#2908C7] font-bold">SULTAN MOBILE</h2>
-            </div>
-            <div className="mt-9 px-5">
+            <NavLink
+              activeclassname="active"
+              to="/">
+              <div className="sidebar-top flex justify-center pt-5 ">
+                <img src="/logo.jpg" alt="" className='w-[60%]' />
+              </div>
+            </NavLink>
+
+            <div className="mt-5 px-5 ">
               <ul className="text-center">
                 <li className="xs:px-5 my-3 xl:my-0">
                   <NavLink
@@ -53,7 +58,7 @@ const Sidebar = () => {
                     </div>
                   </NavLink>
                 </li>
-                <li className="xs:px-5 my-3">
+                {/* <li className="xs:px-5 my-3">
                   <NavLink
                     activeclassname="active"
                     to="/Product">
@@ -62,7 +67,7 @@ const Sidebar = () => {
                       <h1 className="text-sm hidden xl:block">Phones</h1>
                     </div>
                   </NavLink>
-                </li>
+                </li> */}
                 <li className="xs:px-5 my-3">
                   <NavLink
                     activeclassname="active"
@@ -143,7 +148,7 @@ const Sidebar = () => {
             <Outlet />
           </div>
         </div>
-      </div>
+      </div >
     );
 };
 

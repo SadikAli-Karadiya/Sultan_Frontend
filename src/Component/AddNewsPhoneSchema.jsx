@@ -14,12 +14,12 @@ export const PhoneSchema = Yup.object({
         .required("Please Enter IMEI no."),
     date: Yup.date().required('Please select date'),
     company_name: Yup.string().required('Please select company'),
-    colour: Yup.string().required('Please enter colour'),
+    // colour: Yup.string().required('Please enter colour'),
     model: Yup.string().required('Please select model'),
     storage: Yup.string().required('Please select storage'),
     installment: Yup.string().required('Please select installment'),
     installment_charge: Yup.number().typeError('Please enter only numbers').required('Please enter installment charge'),
-    dp: Yup.number().typeError('DP must be a number').positive('DP must be positive')
+    dp: Yup.string().required("Please Enter Down Payment."),
 });
 
 export const NewPhoneValues = {
@@ -28,7 +28,7 @@ export const NewPhoneValues = {
     storage: "",
     model: "",
     iemi : "",
-    color : "",
+    colour : "",
     price: "",
     installment: "",
     installment_charge: "",
