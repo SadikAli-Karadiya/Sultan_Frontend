@@ -41,10 +41,13 @@ function PayEMI() {
   }
   
   const handlePayEMI = (id) => {
-    setChargeFormModal(true);
-    setIsEdit(true)
-    setEMIDetails(id);
-  };
+    navigate(`/receipt/Generate/${id}`,
+        {
+            state: {
+                emi_id: id,
+            }
+        })
+};
 
   React.useEffect(()=>{
     const listener = async (event) => {

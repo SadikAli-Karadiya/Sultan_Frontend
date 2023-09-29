@@ -213,6 +213,7 @@ function ProductList() {
                                   <div onClick={() => handleUpdatemodel(item.id)}>
                                     <FiEdit className='text-[17px] cursor-pointer' />
                                   </div>
+                                    
                                 </Tippy>
                               </div>
                             </td>

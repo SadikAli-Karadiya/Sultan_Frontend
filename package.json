@@ -62,6 +62,7 @@
     "@material-tailwind/react": "^2.0.0",
     "@mui/material": "^5.13.0",
     "@tippyjs/react": "^4.2.6",
+    "apexcharts": "^3.41.0",
     "axios": "^1.4.0",
     "export-from-json": "^1.7.3",
     "formik": "^2.2.9",

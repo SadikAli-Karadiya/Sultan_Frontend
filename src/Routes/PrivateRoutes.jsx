@@ -17,20 +17,21 @@ import { userDetail } from '../utils/apiCalls';
 import { useQuery } from 'react-query'
 import Loader from "../Component/Loader";
 import Company from '../Pages/Company'
-import {PhoneContext} from '../PhoneContext'
+import { PhoneContext } from '../PhoneContext'
+import HelpLine from '../Component/Helpline'
 
 function PrivateRoutes() {
-  const {logout, setUser} = React.useContext(PhoneContext)
-    const userData = useQuery('userData', userDetail)
+  const { logout, setUser } = React.useContext(PhoneContext)
+  const userData = useQuery('userData', userDetail)
 
-    React.useEffect(() => {
-        if (userData.isSuccess) {
-          setUser(userData?.data?.data.User);
-        }
-        if (userData.isError) {
-          logout();
-        }
-    }, [userData]);
+  React.useEffect(() => {
+    if (userData.isSuccess) {
+      setUser(userData?.data?.data.User);
+    }
+    if (userData.isError) {
+      logout();
+    }
+  }, [userData]);
 
   return (
     <div>
@@ -39,6 +40,7 @@ function PrivateRoutes() {
         <Route element={<PrivatLayout />}>
           <Route path='/' element={<Dashboard />} />
           <Route path='/EMI' element={<PayEMI />} />
+          <Route path='/HelpLine' element={<HelpLine />} />
           <Route path='/Receipt/*' element={<Index />} />
           <Route path='/Report' element={<Report />} />
           <Route path='/Product/*' element={<Product />} />

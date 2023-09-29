@@ -16,8 +16,7 @@ import 'tippy.js/dist/tippy.css';
 function GenerateReceipt() {
 
     const location = useLocation();
-    const {user} = React.useContext(PhoneContext);
-
+    const { user } = React.useContext(PhoneContext);
     const Emi_Details = useQuery(['emi', location?.state?.emi_id], () => getSingleEmi(location?.state.emi_id))
     const [selectPayment, setSelectPayment] = useState("1");
     const [Charge, setCharge] = useState(false);
@@ -43,7 +42,6 @@ function GenerateReceipt() {
         invalid_pin: '',
         month: ''
     });
-
     const onSubmit = () => {
         let err = 0;
 
@@ -126,21 +124,24 @@ function GenerateReceipt() {
 
             setIsSubmitting(true);
 
-            const res = await AddTransection(EMIData)
+            // if (location.state.isEdit = true) {
+            //     console.log("edit")
+            // } else {
+                let res = await AddTransection(EMIData)
+                setIsSubmitting(false);
 
-            setIsSubmitting(false);
-
-            if (res.data.success == true) {
-                toast.success('Receipt generated successfully')
-                navigate(`/receipt/receipt/${res?.data?.data?.receipt_id}`);
-            } else {
-                setErrors((prevData) => {
-                    return {
-                        ...prevData,
-                        invalid_pin: res.data.message
-                    }
-                });
-            }
+                if (res.data.success == true) {
+                    toast.success('Receipt generated successfully')
+                    navigate(`/receipt/receipt/${res?.data?.data?.receipt_id}`);
+                } else {
+                    setErrors((prevData) => {
+                        return {
+                            ...prevData,
+                            invalid_pin: res.data.message
+                        }
+                    });
+                }
+            // }
 
         }
         catch (err) {
@@ -423,6 +424,7 @@ function GenerateReceipt() {
                                             name="receiptDate"
                                             onChange={handleChangeDate}
                                             value={moment(receiptDate).format("yyyy-MM-D")}
+                                            disabled={true}
                                             className="ml-4"
                                         />
                                     </div>
@@ -443,7 +445,7 @@ function GenerateReceipt() {
                                         <BiRupee className="" />
                                     </div>
                                     <input type="text"
-                                        name="price"
+                                        name="total"
                                         value={Total}
                                         disabled={true}
                                         className="bg-white w-28 ml-2 "

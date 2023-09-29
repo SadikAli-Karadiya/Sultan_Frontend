@@ -360,26 +360,26 @@ function CustomerProfile() {
             confirmButtonText: "Delete",
             showLoaderOnConfirm: true,
             allowOutsideClick: false
-        
+
         }).then(async (result) => {
             if (result.isConfirmed) {
-                try{
+                try {
                     const response = await DeletePurchase(id);
                     if (response.data?.success == true) {
                         purchaseDetails.refetch();
                         toast.success(response.data?.message);
                     }
                 }
-                catch(err){
-                    if(err instanceof AxiosError){
+                catch (err) {
+                    if (err instanceof AxiosError) {
                         toast.error(err.response.data.message)
                     }
-                    else{
+                    else {
                         toast.error('Failed to delete phone')
                     }
                 }
                 finally {
-                    Swal.hideLoading(); 
+                    Swal.hideLoading();
                 }
             }
         });
@@ -426,7 +426,6 @@ function CustomerProfile() {
     if (CustomerDetail.isLoading) {
         return <LoaderBig />
     }
-
     return (
         <>
             <div className="py-5">
@@ -870,22 +869,22 @@ function CustomerProfile() {
                                 <table
                                     className="w-full bg-slate-100 text-sm text-center "
                                     id="table-to-xls">
-                                    <thead className="text-xs text-gray-700 bg-class3-50 uppercase">
-                                        <tr className="text-black text-xs ">
+                                    <thead className="text-xs text-gray-700 bg-[#0d0d48] uppercase">
+                                        <tr className="text-white text-xs ">
                                             <th scope="col" className="pl-3 py-4">
                                                 Date
                                             </th>
                                             <th scope="col" className="px-6 py-4">
-                                                Company
+                                                Bill No
                                             </th>
                                             <th scope="col" className="px-6 py-4">
-                                                Model
+                                                Phone
                                             </th>
                                             <th scope="col" className="px-6 py-4">
-                                                Colour
+                                                IEMI No
                                             </th>
                                             <th scope="col" className="px-6 py-4">
-                                                EMI Type
+                                                EMI
                                             </th>
                                             <th scope="col" className="px-6 py-4">
                                                 Total Amount
@@ -913,7 +912,7 @@ function CustomerProfile() {
                                                 </tr>
                                             </tbody>
                                             :
-                                            <tbody className=" bg-white  items-center bg  overflow-x-scroll xl:overflow-x-hidden 2xl:overflow-x-hidden">
+                                            <tbody className='items-center bg-white  overflow-x-scroll xl:overflow-x-hidden 2xl:overflow-x-hidden'>
                                                 {
                                                     purchaseDetails?.data?.data?.CustomerAllPurchase?.length > 0
                                                         ?
@@ -925,13 +924,15 @@ function CustomerProfile() {
                                                                         {moment(item.createdAt).format("DD / MM / YYYY")}
                                                                     </td>
                                                                     <td className="px-6 py-5 ">
-                                                                        {item?.specification.phone?.company?.company_name}
+                                                                        1250
                                                                     </td>
                                                                     <td className="px-6 py-5 capitalize">
-                                                                        {item.specification.phone.model_name}
-                                                                    </td>
-                                                                    <td className="px-6 py-5 capitalize">
+                                                                        {item?.specification.phone?.company?.company_name}-
+                                                                        {item.specification.phone.model_name}-
                                                                         {item.colour}
+                                                                    </td>
+                                                                    <td className="px-6 py-5 capitalize">
+                                                                        123456789012345
                                                                     </td>
                                                                     <td className="px-6 py-5">
                                                                         {item.installment.month} Months

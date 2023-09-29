@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { SignIn } from '../../utils/apiCalls';
 import { PhoneContext } from '../../PhoneContext'
 
+
 const signUpSchema = Yup.object({
     // username: Yup.string().required("Please Enter Your Username"),
     // password: Yup.string().required("Please Enter Password")
@@ -57,27 +58,24 @@ function Login() {
                     </div>
                     <div className="flex flex-1 flex-col justify-start mt-5">
                         <div className="flex  justify-end xl:justify-end items-end px-3 sm:pr-10">
-                            {/* <img
-                                src="images/logo.png"
+                            <img
+                                src="logo.jpg"
                                 alt=""
                                 className=" w-28 lg:w-36"
                                 id="logo"
-                            /> */}
-                            <h2 className="text:xl sm:text-2xl md:text-3xl text-[#2908C7] font-bold">SULTAN MOBILE</h2>
+                            />
                         </div>
-                        <section className="py-20 px-14 mt-16 xl::ml-20 flex justify-center items-center xl::w-2/3">
+                        <section className="py-20 px-14 mt-8 xl::ml-20 flex justify-center items-center xl::w-2/3">
                             <div className="login ">
-                                <div className="mb-10">
-                                    <h2 className="text-[24px] text-slate-600 font-bold text-center tracking-wider">
-                                        Let's get started
-                                    </h2>
+                                <div className='flex flex-col items-center justify-center'>
+                                    <img src="/images/pinlogin.jpg" alt="" className='w-1/3' />
                                 </div>
                                 <form
                                     action=""
                                     onSubmit={handleSubmit}
-                                    className="flex flex-col justify-center items-center "
+                                    className="flex flex-col justify-center items-center"
                                 >
-                                    <div className='flex flex-col space-y-6 w-full'>
+                                    <div className='flex flex-col space-y-6 '>
                                         {/* <div className="flex flex-col">
                                             <label htmlFor="" className='text-slate-600 text-[15px]'>Username</label>
                                             <input
@@ -114,25 +112,27 @@ function Login() {
                                                 null}
                                         </div> */}
                                         <div className="flex flex-col">
-                                            <label htmlFor="" className='text-slate-600 text-[15px]'>PIN</label>
-                                            <input
-                                                type="password"
-                                                className='bg-blue-50 outline-none rounded-md h-[38px] w-full px-2 mt-2'
-                                                name="pin"
-                                                id="pin"
-                                                placeholder='Enter your pin'
-                                                value={values.password}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                            />
-                                            {errors.pin && touched.pin
-                                                ?
-                                                <p className='form-error text-red-600 text-xs mt-2 font-semibold'>{errors.pin}</p>
-                                                :
-                                                null}
+                                            <label htmlFor="" className='text-slate-800 text-center font-semibold '>Enter your PIN number for login</label>
+                                            <div className='flex justify-start w-full flex-col items-center my-5'>
+                                                <input
+                                                    type="password"
+                                                    className='bg-blue-50 outline-none rounded-md h-[38px] w-full px-2 '
+                                                    name="pin"
+                                                    id="pin"
+                                                    placeholder='* * * *'
+                                                    value={values.password}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                />
+                                                {errors.pin && touched.pin
+                                                    ?
+                                                    <p className='form-error text-red-600 text-xs mt-2 text-left w-full font-semibold'>{errors.pin}</p>
+                                                    :
+                                                    null}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="mt-10">
+                                    <div className="">
                                         <button
                                             type="submit"
                                             disabled={isLoading}
