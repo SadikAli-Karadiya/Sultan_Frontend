@@ -390,6 +390,17 @@ export const getReceiptbyPurchaseId = (id) => {
   })
 }
 
+export const updateReceipt = (data) => {
+  return instance({
+    'method': 'PUT',
+    'url': `/receipt/update`,
+    'headers': {
+      'content-type': 'application/json'
+    },
+    'data': data,
+  })
+}
+
 export const deleteReceiptById = (id) => {
   return instance({
     'method': 'DELETE',

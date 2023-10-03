@@ -7,7 +7,7 @@ import { AxiosError } from "axios";
 import moment from 'moment'
 import { BiRupee } from "react-icons/bi";
 import { MdDelete } from "react-icons/md"
-import { getSingleEmi, AddTransection } from '../../../utils/apiCalls';
+import { getSingleEmi, AddTransection, updateReceipt } from '../../../utils/apiCalls';
 import { useQuery } from 'react-query'
 import Tippy from '@tippyjs/react';
 import { PhoneContext } from "../../../PhoneContext";
@@ -21,6 +21,7 @@ function GenerateReceipt() {
     const [selectPayment, setSelectPayment] = useState("1");
     const [Charge, setCharge] = useState(false);
     const [Charge_amount, setchargeamount] = useState("");
+    const [totalAmount, setTotalAmount] = useState(0);
     const [chequeNo, setChequeNo] = useState('');
     const [chequeDate, setChequeDate] = useState('');
     const [upiNo, setUpiNo] = useState('');
@@ -109,14 +110,14 @@ function GenerateReceipt() {
                 is_by_cash: toggleCash ? 1 : 0,
                 is_by_cheque: toggleCheque ? 1 : 0,
                 is_by_upi: toggleUpi ? 1 : 0,
-                cheque_no: chequeNo,
+                cheque_no: chequeNo == '' ? null : Number(chequeNo),
                 cheque_date: chequeDate == '' ? null : new Date(chequeDate),
-                upi_no: upiNo,
+                upi_no: upiNo == '' ? null : Number(upiNo),
                 user_id: user.id,
                 purchase_id: Emi_Details?.data?.data?.SingleEmi?.purchase?.id,
                 Emi_id: Emi_Details?.data?.data?.SingleEmi?.id,
-                Charge_amount: Charge_amount,
-                amount: Emi_Details?.data?.data?.SingleEmi?.amount,
+                Charge_amount: Number(Charge_amount),
+                amount: totalAmount,
                 security_pin: pin,
                 customer_id: Emi_Details?.data?.data?.SingleEmi?.purchase?.customer?.id,
                 date: new Date(receiptDate)
@@ -124,9 +125,23 @@ function GenerateReceipt() {
 
             setIsSubmitting(true);
 
-            // if (location.state.isEdit = true) {
-            //     console.log("edit")
-            // } else {
+            if (location.state.isEdit = true) {
+                Object.assign(EMIData, {emi_id: location?.state.emi_id})
+                let res = await updateReceipt(EMIData)
+                setIsSubmitting(false);
+
+                if (res.data.success == true) {
+                    toast.success('Receipt updated successfully')
+                    // navigate(`/receipt/receipt/${res?.data?.data?.receipt_id}`);
+                } else {
+                    setErrors((prevData) => {
+                        return {
+                            ...prevData,
+                            invalid_pin: res.data.message
+                        }
+                    });
+                }
+            } else {
                 let res = await AddTransection(EMIData)
                 setIsSubmitting(false);
 
@@ -141,7 +156,7 @@ function GenerateReceipt() {
                         }
                     });
                 }
-            // }
+            }
 
         }
         catch (err) {
@@ -283,10 +298,13 @@ function GenerateReceipt() {
     }
 
     function handleCharge(event) {
-        setchargeamount(event.target.value)
+        setchargeamount(event.target.value) 
     };
 
-    let Total = (Number(Emi_Details?.data?.data?.SingleEmi?.amount) + Number(Charge_amount))
+    React.useEffect(() => {
+        setTotalAmount(Emi_Details?.data?.data?.SingleEmi?.amount)
+    }, [Emi_Details.isSuccess]);
+
 
     return (
         <>
@@ -335,24 +353,24 @@ function GenerateReceipt() {
                                             </div>
                                         </div>
                                         <div className="px-7 font-mono xs:order-1 sm:order-2 py-2 flex justify-end">
-                                            <h3 className=""> Date : {receiptDate}</h3>
+                                            <h3 className=""> Date : {moment(receiptDate).format("DD-MM-yyyy")}</h3>
                                         </div>
                                     </div>
 
                                     <div className="flex xs:flex-col xs:space-x-0 xs:space-y-4 xs:py-1 sm:flex-row sm:space-y-0 sm:space-x-5 px-12 py-5  space-x-4">
                                         <span className="px-4 py-1 bg-green-200 text-green-900 font-bold text-sm rounded shadow-xl ">
-                                            Paid : {Emi_Details?.data?.data?.SingleEmi?.amount}
+                                            Paying : {totalAmount}
                                         </span>
                                         <span className="px-4 py-1 bg-red-200 text-red-900 font-bold text-sm rounded shadow-xl ">
                                             Charge : {Charge_amount ? Charge_amount : 0}
                                         </span>
                                         <span className="px-4 py-1 bg-blue-200 text-[#0d0d48] font-bold text-sm rounded shadow-xl ">
-                                            Total : {Number(Emi_Details?.data?.data?.SingleEmi?.amount) + Number(Charge_amount)}
+                                            Total : {Number(totalAmount) + Number(Charge_amount)}
                                         </span>
                                     </div>
                                     <div className="flex xs:flex-col md:flex-row md:items-center justify-between xs:px-5">
                                         <div className="px-6 py-3 text-[#0d0d48] ">
-                                            <h2 className="font-bold">* Paid by : <span className="font-medium text-gray-600">{selectPayment}</span></h2>
+                                            <h2 className="font-bold">* Paying by : <span className="font-medium text-gray-600">{selectPayment}</span></h2>
                                             {
                                                 toggleCheque
                                                     ?
@@ -423,7 +441,7 @@ function GenerateReceipt() {
                                         <input type="date"
                                             name="receiptDate"
                                             onChange={handleChangeDate}
-                                            value={moment(receiptDate).format("yyyy-MM-D")}
+                                            value={moment(receiptDate).format("yyyy-MM-DD")}
                                             disabled={true}
                                             className="ml-4"
                                         />
@@ -446,9 +464,9 @@ function GenerateReceipt() {
                                     </div>
                                     <input type="text"
                                         name="total"
-                                        value={Total}
-                                        disabled={true}
-                                        className="bg-white w-28 ml-2 "
+                                        value={totalAmount}
+                                        onChange={(e)=> setTotalAmount(e.target.value)}
+                                        className="bg-white w-28 ml-2 border-transparent focus:ring-0"
                                     />
 
                                 </div>
@@ -458,7 +476,7 @@ function GenerateReceipt() {
                                             <div className="flex items-center justify-end"
                                                 onClick={handleAddCharge}
                                             >
-                                                <h1 className="bg-red-600 py-[5px] px-2 text-sm rounded-md text-white  cursor-pointer">Charge</h1>
+                                                <h1 className="bg-red-600 py-[5px] px-2 text-sm rounded-md text-white  cursor-pointer">Extra Charge</h1>
                                             </div>
                                             :
                                             ""
@@ -582,7 +600,7 @@ function GenerateReceipt() {
                             }
 
                             <div className="mt-5 w-full flex items-center justify-between">
-                                <span className="text-sm font-semibold">Admin : {user.username}</span>
+                                <span className="text-sm font-semibold">Admin : {user?.username}</span>
                                 <button
                                     type="button"
                                     onClick={onSubmit}
