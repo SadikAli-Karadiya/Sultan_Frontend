@@ -68,8 +68,6 @@ function Header() {
     setismenu(!isMenu);
   };
 
-  console.log(allCustomers)
-
   return (
     <div className="h-14 z-[101] lg:h-16 sticky top-0 bg-white w-full flex justify-between items-center px-3 lg:px-5 drop-shadow-md">
       <div className='flex flex-col  w-full relative'>

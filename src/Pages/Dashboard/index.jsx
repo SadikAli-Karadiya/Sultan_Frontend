@@ -22,9 +22,10 @@ function Dashboard() {
   const [pageNo, setPageNo] = useState(1);
   const [TotalCollection, setTotalCollection] = useState(0);
   const PendingEMI = useQuery(['emi', pageNo], () => getPendingEmi(pageNo - 1))
-  const Pending_Customer = PendingEMI?.data?.data?.totalPendingCustomers || 0
-  const Today_Collection = PendingEMI?.data?.data?.todaysCollection || 0
-  const Today_Model = PendingEMI?.data?.data?.totalModels || 0
+  const [Pending_Customer, setPendingCustomer] = useState(0);
+  const [Today_Collection, setTodayCollection] = useState(0);
+  const [runningModels, setRunningModels] = useState(0);
+  const [pendingAmount, setPendingAmount] = useState(0);
   const [pendingEMICustomers, setPendingEMICustomers] = useState([])
   const [search, setSearch] = useState('')
 
@@ -72,8 +73,12 @@ function Dashboard() {
   };
 
   React.useEffect(() => {
-    if(PendingEMI.data?.data){
-      setPendingEMICustomers(PendingEMI.data.data?.pendingEmiCustomers)
+    if(PendingEMI?.data?.data){
+      setPendingEMICustomers(PendingEMI.data.data?.pendingEmiCustomers);
+      setPendingCustomer(PendingEMI?.data?.data?.totalPendingCustomers);
+      setTodayCollection(PendingEMI?.data?.data?.todaysCollection);
+      setRunningModels(PendingEMI?.data?.data?.totalModels);
+      setPendingAmount(PendingEMI?.data?.data?.totalPendingPayment)
     }
   },[PendingEMI.isSuccess, PendingEMI.data])
 
@@ -106,7 +111,7 @@ function Dashboard() {
                 <GiSmartphone />
               </div>
               <h1 className="text-[#49beff] font-roboto font-bold text-3xl">
-                {Today_Model}
+                {runningModels}
               </h1>
             </div>
           </div>
@@ -122,7 +127,7 @@ function Dashboard() {
                 <BiRupee />
               </div>
               <h1 className="text-[#fa896b] font-roboto font-bold text-3xl">
-                {PendingEMI?.data?.data?.totalPendingPayment || 0}
+                {pendingAmount}
               </h1>
             </div>
           </div>
@@ -133,7 +138,7 @@ function Dashboard() {
 
         <div className='bg-[#13deb930] flex justify-between items-start  py-5 px-3 rounded-md shadow-sm '>
           <div className='flex flex-col space-y-4 '>
-            <p className="text-[#13deb9] text-lg font-semibold ">Total Collection</p>
+            <p className="text-[#13deb9] text-lg font-semibold ">Today's Collection</p>
             <div className='flex items-center space-x-5'>
               <div className='bg-[#13deb9] text-white px-2 py-2 text-3xl rounded-md'>
                 <GiTakeMyMoney />
@@ -290,7 +295,7 @@ function Dashboard() {
         </table>
       </div>
       {
-        search == '' && pendingEMICustomers.length > 0 
+        search == '' && pendingEMICustomers?.length > 0 
         ?
           <div className='mx-auto px-20 py-12 sm:px-24 sm:py-12 md:px-28 md:py-5'>
             <Pagination

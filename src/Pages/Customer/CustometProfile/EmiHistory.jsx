@@ -15,11 +15,9 @@ import { IoIosArrowBack } from "react-icons/io";
 function EMIHistory() {
     const navigate = useNavigate();
     const params = useParams();
-    const [is_Edit, setIsEdit] = useState(false);
-    const [EMI_Details, setEMIDetails] = useState();
     const [emiId, setEmiId] = useState(null)
     const data = useQuery(['emi', params.id], () => getEmiPurchasebyId(params.id));
-    // console.log(data.data.data.AllEmi)
+
     const handlePayEMI = (id) => {
         navigate(`/receipt/Generate/${id}`,
             {

@@ -125,14 +125,14 @@ function GenerateReceipt() {
 
             setIsSubmitting(true);
 
-            if (location.state.isEdit = true) {
+            if (location.state.isEdit == true) {
                 Object.assign(EMIData, {emi_id: location?.state.emi_id})
                 let res = await updateReceipt(EMIData)
                 setIsSubmitting(false);
 
                 if (res.data.success == true) {
-                    toast.success('Receipt updated successfully')
-                    // navigate(`/receipt/receipt/${res?.data?.data?.receipt_id}`);
+                    toast.success(res.data.message)
+                    navigate(`/receipt/receipt/${res?.data?.data?.receipt_id}`);
                 } else {
                     setErrors((prevData) => {
                         return {
@@ -146,7 +146,7 @@ function GenerateReceipt() {
                 setIsSubmitting(false);
 
                 if (res.data.success == true) {
-                    toast.success('Receipt generated successfully')
+                    toast.success(res.data.message)
                     navigate(`/receipt/receipt/${res?.data?.data?.receipt_id}`);
                 } else {
                     setErrors((prevData) => {
