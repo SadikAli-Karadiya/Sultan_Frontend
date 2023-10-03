@@ -52,6 +52,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
           installment: "",
           installment_charge: "",
           dp: "",
+          bill_number: "",
           net_payable: "",
         } : NewPhoneValues,
       validationSchema: PhoneSchema,
@@ -153,7 +154,6 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
   React.useEffect(() => {
     setEMIAmount(Pending_Amount / Month)
   }, [Pending_Amount, SelectInstallment])
-  console.log(Phone_Price + SelectInstallment)
 
   if (!showModal) {
     return <></>;
@@ -222,19 +222,19 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                   <div className="selectinst w-full">
                     <label className="block">
                       <span className="block text-sm font-medium text-white">
-                        Bill Number
+                        Bill Number *
                       </span>
                       <input
                         type="text"
-                        name="billno"
+                        name="bill_number"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.billno}
+                        value={values.bill_number}
                         placeholder="Bill Number"
                         className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
                       />
                       <span className="text-xs font-semibold text-red-600 px-1">
-                        {errors.billno && touched.billno ? errors.billno : null}
+                        {errors.bill_number && touched.bill_number ? errors.bill_number : null}
 
                       </span>
                     </label>
@@ -466,7 +466,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                       <div className="dp w-full">
                         <label className="block">
                           <span className="block text-sm font-medium text-white">
-                            Down Payment
+                            Down Payment *
                           </span>
                           <input
                             type="text"

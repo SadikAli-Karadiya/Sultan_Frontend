@@ -152,8 +152,8 @@ function Receipt() {
                                 </div>
                             </div>
                         </div>
-                        <div className="px-7 pt-5">
-                            <div className="flex justify-between space-y-1 w-full space-x-5">
+                        <div className="px-7 mt-5">
+                            <div className="flex justify-between items-center space-y-1 w-full space-x-5">
                                 <div className="flex items-center w-full">
                                     <h1 className=" font-semibold">Total Amount </h1>
                                     <span className="pl-1 text-lg">:</span>
@@ -161,18 +161,18 @@ function Receipt() {
                                         <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.net_amount}</h1>
                                     </div>
                                 </div>
-                                <div className="flex items-center w-full ">
+                                <div className="flex items-center w-full">
                                     <h1 className=" font-semibold">PaidUp </h1>
                                     <span className="pl-1 text-lg">:</span>
-                                    <div className="ml-2 w-1/2 font-semibold  rounded-md border-2 px-2  border-slate2300">
+                                    <div className="ml-2 w-1/2 font-semibold  rounded-md border-2 px-2  border-slate-200">
                                         <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.net_amount - data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.pending_amount}</h1>
                                     </div>
                                 </div>
                                 <div className="flex items-center w-full">
-                                    <h1 className=" font-semibold">Pending </h1>
+                                    <h1 className=" font-semibold">Bill No </h1>
                                     <span className="pl-1 text-lg">:</span>
-                                    <div className="ml-2 w-1/2 font-semibold rounded-md border-2 px-2  border-slate2300 ">
-                                        <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.pending_amount}</h1>
+                                    <div className="ml-2 w-1/2 font-semibold rounded-md px-2 ">
+                                        <h1>{data?.data?.data?.SingleTransaction?.receipt?.emi.purchase.bill_number}</h1>
                                     </div>
                                 </div>
                             </div>

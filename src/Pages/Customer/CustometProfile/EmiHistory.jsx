@@ -38,7 +38,6 @@ function EMIHistory() {
         }
     }, [data.isSuccess, data.data])
 
-
     return (
         <>
             <div className='xs:px-5 sm:px-10 sm:py-5 h-full'>
@@ -55,7 +54,7 @@ function EMIHistory() {
                             <div className="date w-full">
                                 <label className="block">
                                     <span className="block text-sm font-medium text-black">
-                                        Date
+                                        Purchase Date
                                     </span>
                                     <div className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'>
                                         {moment(data?.data?.data?.AllEmi[0]?.createdAt).format("DD/MM/YYYY")}                                    </div>
@@ -68,7 +67,8 @@ function EMIHistory() {
                                     </span>
                                     <input
                                         type="text"
-                                        value="10"
+                                        value={data?.data?.data?.AllEmi[0].purchase.bill_number}
+                                        disabled={true}
                                         className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
                                     />
                                 </label>
@@ -79,7 +79,7 @@ function EMIHistory() {
                                         Phone
                                     </span>
                                     <div className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'>
-                                        {data?.data?.data?.AllEmi[0]?.purchase?.specification?.phone?.model_name} ( {data?.data?.data?.AllEmi[0]?.purchase?.specification?.ram} X {data?.data?.data?.AllEmi[0]?.purchase?.specification?.storage} )
+                                        {data?.data?.data?.AllEmi[0]?.purchase?.specification?.phone?.model_name} ( {data?.data?.data?.AllEmi[0]?.purchase?.specification?.ram} / {data?.data?.data?.AllEmi[0]?.purchase?.specification?.storage} )
                                     </div>
                                 </label>
                             </div>

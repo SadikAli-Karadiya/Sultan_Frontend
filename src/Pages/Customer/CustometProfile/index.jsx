@@ -875,9 +875,6 @@ function CustomerProfile() {
                                                 Date
                                             </th>
                                             <th scope="col" className="px-6 py-4">
-                                                Bill No
-                                            </th>
-                                            <th scope="col" className="px-6 py-4">
                                                 Phone
                                             </th>
                                             <th scope="col" className="px-6 py-4">
@@ -922,9 +919,6 @@ function CustomerProfile() {
 
                                                                     <td className="px-6 py-5 ">
                                                                         {moment(item.createdAt).format("DD / MM / YYYY")}
-                                                                    </td>
-                                                                    <td className="px-6 py-5 ">
-                                                                        1250
                                                                     </td>
                                                                     <td className="px-6 py-5 capitalize">
                                                                         {item?.specification.phone?.company?.company_name}-
