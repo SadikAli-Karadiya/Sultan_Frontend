@@ -506,7 +506,7 @@ function CustomerProfile() {
                                                         <input
                                                             type="text"
                                                             name="full_name"
-                                                            placeholder="Enter Your Full Name"
+                                                            placeholder="Enter Full Name"
                                                             onChange={handleChange}
                                                             onBlur={handleBlur}
                                                             value={values.full_name}
@@ -528,7 +528,7 @@ function CustomerProfile() {
                                                         <input
                                                             type="text"
                                                             name="mobile"
-                                                            placeholder="Enter Your WhatsApp No"
+                                                            placeholder="Enter WhatsApp No"
                                                             onChange={handleChange}
                                                             onBlur={handleBlur}
                                                             value={values.mobile}
@@ -550,7 +550,7 @@ function CustomerProfile() {
                                                         <input
                                                             type="text"
                                                             name="alternate_no"
-                                                            placeholder="Enter Your Mobile No"
+                                                            placeholder="Enter Alternate Mobile No"
                                                             onChange={handleChange}
                                                             onBlur={handleBlur}
                                                             value={values.alternate_no}
@@ -578,7 +578,7 @@ function CustomerProfile() {
                                                             onBlur={handleBlur}
                                                             value={values.reference_name}
                                                             disabled={isEnable}
-                                                            placeholder="Enter Refeence Name"
+                                                            placeholder="Enter Reference Name"
                                                             className='w-full 2xl:w-60 mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none' />
                                                         <span className="text-xs font-semibold text-red-600 px-1">
                                                             {errors.reference_name && touched.reference_name
@@ -595,7 +595,7 @@ function CustomerProfile() {
                                                         <input
                                                             type="text"
                                                             name="reference_mobile"
-                                                            placeholder="Enter Refrence Mobile No"
+                                                            placeholder="Enter Reference Mobile No"
                                                             onChange={handleChange}
                                                             onBlur={handleBlur}
                                                             value={values.reference_mobile}

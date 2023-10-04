@@ -123,7 +123,7 @@ function CustomerRegister() {
                                             <input
                                                 type="text"
                                                 name="full_name"
-                                                placeholder="Enter Your First Name"
+                                                placeholder="Enter Full Name"
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 value={values.full_name}
@@ -146,7 +146,7 @@ function CustomerRegister() {
                                             <input
                                                 type="text"
                                                 name="mobile"
-                                                placeholder="Enter Your WhatsApp No"
+                                                placeholder="Enter WhatsApp No"
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 value={values.mobile}
@@ -162,12 +162,12 @@ function CustomerRegister() {
                                     <div className="mobileno w-full">
                                         <label className="block">
                                             <span className="block text-sm font-medium text-slate-700">
-                                                Mobile No
+                                                Alternate No
                                             </span>
                                             <input
                                                 type="text"
                                                 name="alternate_no"
-                                                placeholder="Enter Your Mobile No"
+                                                placeholder="Enter Alternate Mobile No"
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 value={values.alternate_no}
@@ -205,7 +205,7 @@ function CustomerRegister() {
                                     <div className="mobileno w-full">
                                         <label className="block">
                                             <span className="block text-sm font-medium text-slate-700">
-                                                Mobile No
+                                                Reference Mobile No
                                             </span>
                                             <input
                                                 type="text"
