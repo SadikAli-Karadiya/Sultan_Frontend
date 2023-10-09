@@ -132,7 +132,12 @@ function GenerateReceipt() {
 
                 if (res.data.success == true) {
                     toast.success(res.data.message)
-                    navigate(`/receipt/receipt/${res?.data?.data?.receipt_id}`);
+                    navigate(`/receipt/receipt/${res?.data?.receipt_id}`, {
+                        state: {
+                            prevPath: "update_receipt",
+                            purchase_id: res?.data?.purchase_id,
+                        }
+                    });
                 } else {
                     setErrors((prevData) => {
                         return {
@@ -420,7 +425,7 @@ function GenerateReceipt() {
                 <div className={`mt-2 bg-student-100 xs:px-5 xl:px-12  py-2 ${model && "opacity-20"} `}>
                     <div className="flex justify-between items-center">
                         <h1 className="font-bold text-[#0d0d48] text-2xl ">
-                            Generate EMI Receipt
+                            {location.state?.isEdit ? 'Update' : 'Generate'} EMI Receipt
                         </h1>
                         <div className="group h-9 w-20 flex justify-center items-center gap-1 cursor-pointer" id="" onClick={() => navigate(-1)}>
                             <IoIosArrowBack className="text-2xl font-bold group-hover:text-blue-700 text-[#0d0d48] mt-[3px]" />
@@ -606,7 +611,7 @@ function GenerateReceipt() {
                                     onClick={onSubmit}
                                     className='w-28 text-white bg-[#0d0d48] hover:shadow-md uppercase px-5 py-2 rounded-md text-sm text-center '
                                 >
-                                    Generate
+                                    {location.state?.isEdit ? 'Update' : 'Generate'}
                                 </button>
                             </div>
                         </form>

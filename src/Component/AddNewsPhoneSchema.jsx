@@ -14,7 +14,7 @@ export const PhoneSchema = Yup.object({
         .required("Please Enter IMEI no."),
     date: Yup.date().required('Please select date'),
     company_name: Yup.string().required('Please select company'),
-    colour: Yup.string().required('Please enter colour'),
+    colour: Yup.string("Please enter only letters"),
     model: Yup.string().required('Please select model'),
     bill_number: Yup.string().required('Please enter bill number'),
     storage: Yup.string().required('Please select storage'),

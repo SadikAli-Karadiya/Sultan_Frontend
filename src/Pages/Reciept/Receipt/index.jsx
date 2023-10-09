@@ -81,16 +81,20 @@ function Receipt() {
                 <div className=' py-5 px-5 flex justify-between'>
                     <h1 className='text-[#0d0d48] text-2xl font-bold'>Receipt</h1>
                     {
-                        location?.state?.prevPath != "update_receipt"
-                            ?
+                        
+                            
                             <div className="group h-9 w-20 flex justify-center items-center gap-1 cursor-pointer" id="" onClick={() => {
-                                navigate(-1)
+                                if(location?.state?.prevPath == "update_receipt"){
+                                    navigate(`/Customer/EMI-History/${location.state.purchase_id}`)
+                                }
+                                else{
+                                    navigate(-1)
+                                }
                             }}>
                                 <IoIosArrowBack className="text-2xl font-bold group-hover:text-blue-700 text-darkblue-500 mt-[3px]" />
                                 <span className=" text-xl text-darkblue-500 font-semibold group-hover:text-blue-700">Back</span>
                             </div>
-                            :
-                            null
+                            
                     }
                 </div>
                 <div className="flex justify-center items-center px-5">

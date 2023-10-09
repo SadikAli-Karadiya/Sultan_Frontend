@@ -43,7 +43,7 @@ function EMIHistory() {
             <div className='xs:px-5 sm:px-10 sm:py-5 h-full'>
                 <div className='sm:py-5 flex justify-between items-center'>
                     <h1 className='text-[#0d0d48] text-2xl font-bold'>EMI Details</h1>
-                    <div className="group h-9 w-20 flex justify-center items-center gap-1 cursor-pointer" id="" onClick={() => navigate(-1)}>
+                    <div className="group h-9 w-20 flex justify-center items-center gap-1 cursor-pointer" id="" onClick={() => navigate(`/InstallmentList/profile-detail/${data.data.data.customer_id}`)}>
                         <IoIosArrowBack className="text-2xl font-bold group-hover:text-blue-700 text-[#0d0d48] mt-[3px]" />
                         <span className=" text-xl text-[#0d0d48] font-semibold group-hover:text-blue-700">Back</span>
                     </div>

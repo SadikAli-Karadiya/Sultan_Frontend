@@ -116,7 +116,7 @@ function Header() {
                                 <div>
                                   <AiFillEye
                                     className="xs:text-base md:text-sm lg:text-[19px] hover:cursor-pointer "
-                                    onClick={() => { navigate(`/InstallmentList/profile-detail/${item?.id}`); setSearch(null) }} />
+                                    onClick={() => { setSearch(''); navigate(`/InstallmentList/profile-detail/${item?.id}`);  }} />
                                 </div>
                               </Tippy>
                             </td>

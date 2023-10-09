@@ -84,7 +84,7 @@ function Dashboard() {
 
   return (
     <div className='px-5 py-5 xl:px-10 '>
-      <div className='grid grid-cols-4 my-10 gap-5 '>
+      <div className='grid grid-cols-4 my-10 gap-5'>
         <div className='bg-[#5d88ff24] flex justify-between items-start py-5 px-3 rounded-md shadow-md '>
           <div className='flex flex-col space-y-4'>
             <p className="text-[#5d87ff] text-lg font-semibold ">Total Pending Customer</p>

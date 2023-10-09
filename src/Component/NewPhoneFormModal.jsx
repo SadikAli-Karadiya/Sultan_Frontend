@@ -152,7 +152,8 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
   }, [Net_playable, Down_Payment])
 
   React.useEffect(() => {
-    setEMIAmount(Pending_Amount / Month)
+    if(Month !== 0)
+      setEMIAmount(Pending_Amount / Month)
   }, [Pending_Amount, SelectInstallment])
 
   if (!showModal) {
@@ -359,7 +360,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                       <div className="price w-full">
                         <label className="block">
                           <span className="block text-sm font-medium text-white">
-                            Colour *
+                            Colour
                           </span>
                           <input
                             type="text"
@@ -371,7 +372,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
                             className='w-full  mt-1 block  px-3 py-2 bg-white border  border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 outline-none'
                           />
                           <span className="text-xs font-semibold text-red-600 px-1">
-                            {/* {errors.colour && touched.colour ? errors.colour : null} */}
+                            {errors.colour && touched.colour ? errors.colour : null}
 
                           </span>
                         </label>
