@@ -106,6 +106,7 @@ const Report = () => {
   // -------------------------------
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
+    console.log(itemOffset, endOffset)
     setcurrentItems(data?.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(data?.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, data]);
@@ -121,8 +122,8 @@ const Report = () => {
   }
 
   const handlePageClick = (page) => {
-    const newOffset = (page * itemsPerPage) % data.length;
-    setPageNo(page + 1);
+    const newOffset = (((page * itemsPerPage) - itemsPerPage)) % data.length;
+    setPageNo(page);
     setItemOffset(newOffset);
   };
 
