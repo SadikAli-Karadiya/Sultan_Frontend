@@ -84,7 +84,7 @@ function Receipt() {
                         
                             
                             <div className="group h-9 w-20 flex justify-center items-center gap-1 cursor-pointer" id="" onClick={() => {
-                                if(location?.state?.prevPath == "update_receipt"){
+                                if(location?.state?.prevPath == "update_receipt" || location?.state?.prevPath == "generate_receipt"){
                                     navigate(`/Customer/EMI-History/${location.state.purchase_id}`)
                                 }
                                 else{

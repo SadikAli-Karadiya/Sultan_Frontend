@@ -29,6 +29,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
   const [Pending_Amount, setPendingAmount] = useState(0);
   const [EMI_Amount, setEMIAmount] = useState(0);
   const [Month, setMonth] = useState(0);
+  const [selectedSpecification, setSelectedSpecification] = useState(null);
 
   const Company_Details = useQuery('company', getAllCompanies)
   const specification = useQuery('specification', getallSpecification)
@@ -65,7 +66,8 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
           { month: data.installment },
           { Down_Payment: Down_Payment },
           { net_payable: Net_playable },
-          { admin_id: user.admin_id }
+          { admin_id: user.admin_id },
+          { selected_specification_id : selectedSpecification}
         )
         try {
           setIsLoading(true)
@@ -107,6 +109,7 @@ function NewPhoneFormModal({ showModal, handleShowModal, PhoneDetails, is_Edit }
     let Price = specification?.data?.data?.AllSpecification?.find((n) => {
       return n?.id == option;
     });
+    setSelectedSpecification(Price.id)
     setram(Price.ram)
     setstorage(Price.storage)
     setPhonePrice(Price.price)

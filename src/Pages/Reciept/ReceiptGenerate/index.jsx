@@ -152,7 +152,12 @@ function GenerateReceipt() {
 
                 if (res.data.success == true) {
                     toast.success(res.data.message)
-                    navigate(`/receipt/receipt/${res?.data?.data?.receipt_id}`);
+                    navigate(`/receipt/receipt/${res?.data?.data?.receipt_id}`,{
+                        state: {
+                            prevPath: "generate_receipt",
+                            purchase_id: res?.data?.data?.purchase_id,
+                        }
+                    });
                 } else {
                     setErrors((prevData) => {
                         return {
@@ -310,7 +315,6 @@ function GenerateReceipt() {
         setTotalAmount(Emi_Details?.data?.data?.SingleEmi?.amount)
     }, [Emi_Details.isSuccess]);
 
-
     return (
         <>
             <div className="relative bg-student-100 py-3 ">
@@ -348,8 +352,8 @@ function GenerateReceipt() {
                                             </div>
                                             <div className="flex xs:space-y-5 lg:space-y-1 flex-col">
                                                 <div className="flex xs:flex-col xs:space-y-2 lg:flex-row lg:space-x-5 lg:space-y-0">
-                                                    <h2 className="font-roboto">Company : {Emi_Details?.data?.data?.SingleEmi?.purchase?.phone?.company?.company_name}</h2>
-                                                    <h2 className="font-roboto">Model : {Emi_Details?.data?.data?.SingleEmi?.purchase?.phone?.model_name}</h2>
+                                                    <h2 className="font-roboto">Company : {Emi_Details?.data?.data?.SingleEmi?.purchase?.specification.phone.company.company_name}</h2>
+                                                    <h2 className="font-roboto">Model : {Emi_Details?.data?.data?.SingleEmi?.purchase?.specification.phone?.model_name}</h2>
                                                     <h2 className="font-roboto">RAM : {Emi_Details?.data?.data?.Specifications?.ram} / {Emi_Details?.data?.data?.Specifications?.storage}
                                                     </h2>
                                                 </div>
@@ -455,8 +459,8 @@ function GenerateReceipt() {
                             </div>
                             <div className="flex flex-col space-y-2 py-2">
                                 <div className="space-x-5">
-                                    <span className="text-[14.5px] font-roboto">Company : {Emi_Details?.data?.data?.SingleEmi?.purchase?.phone?.company?.company_name} </span>
-                                    <span className="text-[14.5px] font-roboto">Model : {Emi_Details?.data?.data?.SingleEmi?.purchase?.phone?.model_name}</span>
+                                    <span className="text-[14.5px] font-roboto">Company : {Emi_Details?.data?.data?.SingleEmi?.purchase?.specification.phone?.company?.company_name} </span>
+                                    <span className="text-[14.5px] font-roboto">Model : {Emi_Details?.data?.data?.SingleEmi?.purchase?.specification.phone?.model_name}</span>
                                     <span className="text-[14.5px] font-roboto">Storage : {Emi_Details?.data?.data?.Specifications?.ram} / {Emi_Details?.data?.data?.Specifications?.storage}</span>
                                 </div>
                                 <span className=" text-[14.5px] font-roboto">Net Amount : {Emi_Details?.data?.data?.SingleEmi?.purchase?.net_amount}</span>

@@ -878,7 +878,10 @@ function CustomerProfile() {
                                                 Phone
                                             </th>
                                             <th scope="col" className="px-6 py-4">
-                                                IEMI No
+                                                IMEI No
+                                            </th>
+                                            <th scope="col" className="px-6 py-4">
+                                                Bill No
                                             </th>
                                             <th scope="col" className="px-6 py-4">
                                                 EMI
@@ -921,12 +924,15 @@ function CustomerProfile() {
                                                                         {moment(item.createdAt).format("DD / MM / YYYY")}
                                                                     </td>
                                                                     <td className="px-6 py-5 capitalize">
-                                                                        {item?.specification.phone?.company?.company_name}-
-                                                                        {item.specification.phone.model_name}-
-                                                                        {item.colour}
+                                                                        {`${item?.specification.phone?.company?.company_name} ${item.specification.phone.model_name} `
+                                                                        }
+                                                                        <span>{item.colour ? `(${item.colour})` : null}</span>
                                                                     </td>
                                                                     <td className="px-6 py-5 capitalize">
-                                                                        123456789012345
+                                                                        {item.iemi}
+                                                                    </td>
+                                                                    <td className="px-6 py-5 capitalize">
+                                                                        {item.bill_number == null ? '-' : item.bill_number}
                                                                     </td>
                                                                     <td className="px-6 py-5">
                                                                         {item.installment.month} Months
