@@ -32,7 +32,7 @@ const Sidebar = () => {
               activeclassname="active"
               to="/">
               <div className="sidebar-top flex justify-center pt-5 ">
-                <img src="/logo.jpg" alt="" className='w-[60%]' />
+                <img src="logo.jpg" alt="" className='w-[60%]' />
               </div>
             </NavLink>
 
